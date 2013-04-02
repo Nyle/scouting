@@ -7,7 +7,12 @@ from sqlalchemy import (
     Boolean,
     )
 
-from models.base import Base
+from models.base import (
+    Base,
+    DBSession,
+    )
+
+from models.robot_match import RobotMatch
 
 class Match(Base):
     """The alliances and scores for a specific match.
@@ -85,6 +90,13 @@ class Match(Base):
         self.b_1 = blue_robots[0]
         self.b_2 = blue_robots[1]
         self.b_3 = blue_robots[2]
+
+        # Create the robot matches for the match
+        # TODO: Find out how to make it so if the match is deleted the robot
+        #       matches will be too
+        for robot_number in self.get_red + self.get_blue:
+            DBSession.add(RobotMatch(match_number=match_number,
+                                     robot_number=robot_number)
 
     def get_red(self):
         """Get the red alliance teams
