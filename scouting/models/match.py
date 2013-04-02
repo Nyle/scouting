@@ -9,8 +9,6 @@ from sqlalchemy import (
 
 from models.base import Base
 
-from collections import namedtuple
-
 class Match(Base):
     """The alliances and scores for a specific match.
 
