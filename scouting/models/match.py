@@ -13,7 +13,8 @@ class Match(Base):
     """The alliances and scores for a specific match.
 
     Attributes:
-        number: The match number.  This is used is the primary key.
+        match_number: The match number.  This is used is the primary key.
+
         scout: The name of the scout who pit scouted the robot. This is not
             currently implemented since users have yet to be implemented.
         is_scouted: Whether the match scores have been entered yet.
@@ -38,20 +39,20 @@ class Match(Base):
         b_total: Blue total points.
     """
     __tablename__ = 'matches'
-    number = Column(Integer, primary_key=True)
+    match_number = Column(Integer, primary_key=True)
 
     # TODO: Add this in when users, permissions, etc. is added in.
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
     is_scouted = Column(Boolean, default=False)
     is_incomplete = Column(Boolean, default=False)
 
-    r_1 = Column(Integer, ForeignKey('robots.number'))
-    r_2 = Column(Integer, ForeignKey('robots.number'))
-    r_3 = Column(Integer, ForeignKey('robots.number'))
-    b_1 = Column(Integer, ForeignKey('robots.number'))
-    b_2 = Column(Integer, ForeignKey('robots.number'))
-    b_3 = Column(Integer, ForeignKey('robots.number'))
+    r_1 = Column(Integer, ForeignKey('robots.robot_number'))
+    r_2 = Column(Integer, ForeignKey('robots.robot_number'))
+    r_3 = Column(Integer, ForeignKey('robots.robot_number'))
 
+    b_1 = Column(Integer, ForeignKey('robots.robot_number'))
+    b_2 = Column(Integer, ForeignKey('robots.robot_number'))
+    b_3 = Column(Integer, ForeignKey('robots.robot_number'))
 
     r_disc = Column(Integer)
     r_climb = Column(Integer)
@@ -63,17 +64,21 @@ class Match(Base):
     b_foul = Column(Integer)
     b_total = Column(Integer)
 
-    def __init__(self, number, red_robots, blue_robots):
+    def __init__(self, match_number, red_robots, blue_robots):
         """Initialise the match.
 
         Initialises the match with its number and the alliance teams.
 
         Args:
-            number: The match number.
-            red_robots: A sequence type object containing the red robots
-            blue_robots: A sequence type object containing the blue robots
+            match_number: The match number.
+            red_robots: A sequence type object or a dictionary with 0, 1, and 2
+                as keys, corresponding to teams 1, 2, and 3 respectively
+                containing the red robots.
+            blue_robots: A sequence type object or a dictionary with 0, 1, and 2
+                as keys, corresponding to teams 1, 2, and 3 respectively
+                containing the blue robots.
         """
-        self.number = number
+        self.match_number = match_number
         self.r_1 = red_robots[0]
         self.r_2 = red_robots[1]
         self.r_3 = red_robots[2]
