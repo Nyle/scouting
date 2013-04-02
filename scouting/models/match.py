@@ -22,6 +22,7 @@ class Match(Base):
         r_1: Red robot 1.
         r_2: Red robot 2.
         r_3: Red robot 3.
+
         b_1: Blue robot 1.
         b_2: Blue robot 2.
         b_3: Blue robot 3.
@@ -38,6 +39,7 @@ class Match(Base):
     """
     __tablename__ = 'matches'
     number = Column(Integer, primary_key=True)
+
     # TODO: Add this in when users, permissions, etc. is added in.
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
     is_scouted = Column(Boolean, default=False)
@@ -49,6 +51,7 @@ class Match(Base):
     b_1 = Column(Integer, ForeignKey('robots.number'))
     b_2 = Column(Integer, ForeignKey('robots.number'))
     b_3 = Column(Integer, ForeignKey('robots.number'))
+
 
     r_disc = Column(Integer)
     r_climb = Column(Integer)
