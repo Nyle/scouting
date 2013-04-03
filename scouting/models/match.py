@@ -94,11 +94,12 @@ class Match(Base):
         # Create the robot matches for the match
         # TODO: Find out how to make it so if the match is deleted the robot
         #       matches will be too
-        for robot_number in self.get_red() + self.get_blue():
+        for robot_number in self.red + self.blue:
             DBSession.add(RobotMatch(match_number=match_number,
                                      robot_number=robot_number))
 
-    def get_red(self):
+    @property
+    def red(self):
         """Get the red alliance teams
 
         Returns:
@@ -106,7 +107,8 @@ class Match(Base):
         """
         return self.r_1, self.r_2, self.r_3
 
-    def get_blue(self):
+    @property
+    def blue(self):
         """Get the blue alliance teams
 
         Returns:
