@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scout Robot ${robot_number}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <h1>Team ${robot_number}'s Robot</h1>
+    ${message}
+    <form action="${request.route_url('scout_robot', robot_number=robot_number)}" method="post">
+        <input type="submit" name="done" value="Done">
+        <input type="submit" name="come_back" value="Come Back">
+        <fieldset>
+            <ledgend>General:</ledgend><br>
+            <label for="description">Description/Notes:</label><br>
+            <textarea name="description" rows="2" cols="50" id="description">${description}</textarea><br>
+        </fieldset>
+        <fieldset>
+            <ledgend>Drivetrain:</ledgend><br>
+
+            <label for="wheels">Wheels:</label><br>
+            <textarea name="wheels" rows="2" cols="50" id="wheels">${wheels}</textarea><br>
+
+            <label for="motors">Drive Motors:</label><br>
+            <textarea name="motors" rows="2" cols="50" id="motors">${motors}</textarea><br>
+
+            <label for="gearbox">Gearbox:</label><br>
+            <textarea name="gearbox" rows="2" cols="50" id="gearbox">${gearbox}</textarea><br>
+        </fieldset>
+        <fieldset>
+            <ledgend>Abilities</ledgend><br>
+
+            <input type="checkbox" tal:attributes="checked can_shoot" name="can_shoot" id="can_shoot">
+            <label for="can_shoot">Shoot/Dump</label><br>
+
+            <input type="checkbox" tal:attributes="checked can_climb" name="can_climb" id="can_climb">
+            <label for="can_climb">Climb</label><br>
+
+            <input type="checkbox" tal:attributes="checked can_human_load" name="can_human_load" id="can_human_load">
+            <label for="can_human_load">Human Loading</label><br>
+
+            <input type="checkbox" tal:attributes="checked can_ground_load" name="can_ground_load" id="can_ground_load">
+            <label for="can_ground_load">Ground Loading</label><br>
+        </fieldset>
+    </form>
+</body>
+</html>
