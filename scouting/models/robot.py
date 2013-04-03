@@ -15,7 +15,7 @@ class Robot(Base):
     Attributes:
         robot_number: The number of the robot.  This is used is the primary key.
         is_scouted: Whether the robot has been scouted yet.
-        scout: The name of the scout who pit scouted the robot. This is not
+        scout: The name of the scout who pit scouted the robot.  This is not
             currently implemented since users have yet to be implemented.
 
         description: A general description of the robot and its abilities.
@@ -51,10 +51,7 @@ class Robot(Base):
     def __init__(self, robot_number):
         """Initialise the robot.
 
-        Initialises the robot with its number.  Only the number is used because
-        all other information will be entered during pit scouting, after all the
-        robots have been initialised from the team list during the database
-        initialisation.
+        Initialises the robot with its number and is_scouted as false.
 
         Args:
             number: The robot's number.
