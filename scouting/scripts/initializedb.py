@@ -35,5 +35,6 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        model = MyModel(name='one', value=1)
-        DBSession.add(model)
+        DBSession.add(Robot(robot_number=10))
+        DBSession.add(Match(match_number=3, red_robots=(10,10,10),
+                            blue_robots=(10,10,10)))
