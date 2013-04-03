@@ -35,6 +35,7 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        DBSession.add(Robot(robot_number=10))
+        for i in range(1, 11):
+            DBSession.add(Robot(robot_number=i))
         DBSession.add(Match(match_number=3, red_robots=(10,10,10),
                             blue_robots=(10,10,10)))
