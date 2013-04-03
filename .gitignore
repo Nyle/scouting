@@ -7,3 +7,10 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Python Files
+__pycache__
+*.egg-info
+
+# Sqlite Database
+*.sqlite
