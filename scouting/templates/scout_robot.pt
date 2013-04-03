@@ -9,7 +9,7 @@
     ${message}
     <form action="${request.route_url('scout_robot', robot_number=robot_number)}" method="post">
         <input type="submit" name="done" value="Done">
-        <input type="submit" name="come_back" value="Come Back">
+        <input type="submit" name="come_back" value="Come Back Later">
         <fieldset>
             <ledgend>General:</ledgend><br>
             <label for="description">Description/Notes:</label><br>

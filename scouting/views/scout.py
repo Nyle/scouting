@@ -22,7 +22,17 @@ def scout_robot(request):
     robot_number = int(request.matchdict['robot_number'])
     robot = DBSession.query(Robot).filter(
         Robot.robot_number == robot_number).first()
-    # TODO: Deal with trying to scout a non-existent robot
+    if robot is None:
+        return HTTPFound(location=request.route_url('scout'))
+    is_scouted = robot.is_scouted
+    description = robot.description
+    wheels = robot.wheels
+    gearbox = robot.gearbox
+    motors = robot.motors
+    can_shoot = robot.can_shoot
+    can_climb = robot.can_climb
+    can_human_load = robot.can_human_load
+    can_ground_load = robot.can_ground_load
     if request.method == 'POST':
         robot.description = request.POST['description']
         robot.wheels = request.POST['wheels']
@@ -47,16 +57,16 @@ def scout_robot(request):
         return HTTPFound(location=request.route_url('scout'))
     return {
         'message':message,
-        'robot_number':robot.robot_number,
-        'is_scouted':robot.is_scouted,
-        'description':robot.description,
-        'wheels':robot.wheels,
-        'motors':robot.motors,
-        'gearbox':robot.gearbox,
-        'can_shoot':robot.can_shoot,
-        'can_climb':robot.can_climb,
-        'can_human_load':robot.can_human_load,
-        'can_ground_load':robot.can_ground_load,
+        'robot_number':robot_number,
+        'is_scouted':is_scouted,
+        'description':description,
+        'wheels':wheels,
+        'motors':motors,
+        'gearbox':gearbox,
+        'can_shoot':can_shoot,
+        'can_climb':can_climb,
+        'can_human_load':can_human_load,
+        'can_ground_load':can_ground_load,
         }
 
 @view_config(route_name='scout_match', renderer='../templates/scout_match.pt')
