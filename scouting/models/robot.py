@@ -7,7 +7,7 @@ from sqlalchemy import (
     Boolean,
     )
 
-from models.base import Base
+from .base import Base
 
 class Robot(Base):
     """The data gathered for a specific robot during pit scouting.

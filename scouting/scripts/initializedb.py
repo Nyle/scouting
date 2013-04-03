@@ -11,8 +11,10 @@ from pyramid.paster import (
 
 from ..models import (
     DBSession,
-    MyModel,
     Base,
+    Robot,
+    Match,
+    RobotMatch,
     )
 
 

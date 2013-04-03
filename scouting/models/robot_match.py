@@ -6,7 +6,7 @@ from sqlalchemy import (
     Boolean,
     )
 
-from models.base import Base
+from .base import Base
 
 class RobotMatch(Base):
     """The data gathered for a specific robot in a specific match.

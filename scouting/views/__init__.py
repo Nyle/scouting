@@ -3,9 +3,11 @@ from pyramid.view import view_config
 
 from sqlalchemy.exc import DBAPIError
 
-from .models import (
+from ..models import (
     DBSession,
-    MyModel,
+    Robot,
+    Match,
+    RobotMatch
     )
 
 

@@ -1,3 +1,8 @@
-from models.base import DBSession
+from .base import (
+    DBSession,
+    Base,
+    )
 
-from models.robot import Robot
+from .robot import Robot
+from .match import Match
+from .robot_match import RobotMatch

@@ -7,12 +7,12 @@ from sqlalchemy import (
     Boolean,
     )
 
-from models.base import (
+from .base import (
     Base,
     DBSession,
     )
 
-from models.robot_match import RobotMatch
+from .robot_match import RobotMatch
 
 class Match(Base):
     """The alliances and scores for a specific match.
