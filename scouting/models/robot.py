@@ -36,11 +36,11 @@ class Robot(Base):
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
     is_scouted = Column(Boolean, default=False)
 
-    description = Column(UnicodeText, default=u'')
+    description = Column(UnicodeText)
 
-    wheels = Column(UnicodeText, default=u'')
-    gearbox = Column(UnicodeText, default=u'')
-    motors = Column(UnicodeText, default=u'')
+    wheels = Column(UnicodeText)
+    gearbox = Column(UnicodeText)
+    motors = Column(UnicodeText)
 
     can_shoot = Column(Boolean)
     can_climb = Column(Boolean)

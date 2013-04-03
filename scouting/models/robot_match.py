@@ -98,7 +98,7 @@ class RobotMatch(Base):
     level_reached = Column(Integer)
     frisbees_dumped = Column(Integer)
     did_fall_off_pyramid = Column(Boolean)
-    climbing_description = Column(Text)
+    climbing_description = Column(UnicodeText)
 
     did_human_load = Column(Boolean)
     frisbees_sucessfully_human_loaded = Column(Integer)
