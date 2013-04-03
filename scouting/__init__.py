@@ -21,7 +21,7 @@ def main(global_config, **settings):
     config.add_route('view_match', '/view/m{match_number:\d+}')
     config.add_route('scout', '/scout')
     config.add_route('scout_robot', '/scout/r{robot_number:\d+}')
-    config.add_route('scout_match', '/scout/m/{match_number:\d+}')
+    config.add_route('scout_match', '/scout/m{match_number:\d+}')
     config.add_route('scout_robot_match',
                      '/scout/r{robot_number:\d+}m{match_number:\d+}')
     config.scan()
