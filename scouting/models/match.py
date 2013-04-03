@@ -90,6 +90,7 @@ class Match(Base):
         self.b_1 = blue_robots[0]
         self.b_2 = blue_robots[1]
         self.b_3 = blue_robots[2]
+        is_scouted = False
 
         # Create the robot matches for the match
         # TODO: Find out how to make it so if the match is deleted the robot
@@ -100,7 +101,7 @@ class Match(Base):
 
     @property
     def red(self):
-        """Get the red alliance teams
+        """Get the red alliance teams.
 
         Returns:
             A  tuple of the red alliance teams.
@@ -109,9 +110,58 @@ class Match(Base):
 
     @property
     def blue(self):
-        """Get the blue alliance teams
+        """Get the blue alliance teams.
 
         Returns:
             A  tuple of the blue alliance teams.
         """
         return self.b_1, self.b_2, self.b_3
+
+    @property
+    def r_points(self):
+        """Get the red alliance points.
+
+        Returns:
+            A dictionary of the points scored by the red alliance with the keys
+            disc, climb, foul, total.
+        """
+        return {
+            'disc':self.r_disc,
+            'climb':self.r_climb,
+            'foul':self.r_foul,
+            'total':self.r_total,
+            }
+
+    @property
+    def b_points(self):
+        """Get the blue alliance points.
+
+        Returns:
+            A dictionary of the points scored by the blue alliance with the keys
+            disc, climb, foul, total.
+        """
+        return {
+            'disc':self.b_disc,
+            'climb':self.b_climb,
+            'foul':self.b_foul,
+            'total':self.b_total,
+            }
+
+    def set_points(self, r_points, b_points):
+        """Set the matches points.
+
+        Uses two dictionaries of the form output by r_points() and b_points() to
+        set the matches points.
+
+        Args:
+            r_points: A dictionary containing the red alliance points.
+            b_points: A dictionary containing the blue alliance points.
+        """
+        r_disc = r_points['disc']
+        r_climb = r_points['climb']
+        r_foul = r_points['foul']
+        r_total = r_points['total']
+        b_disc = b_points['disc']
+        b_climb = b_points['climb']
+        b_foul = b_points['foul']
+        b_total = b_points['total']
