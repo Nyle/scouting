@@ -23,7 +23,7 @@ class Match(Base):
         scout: The name of the scout who pit scouted the robot. This is not
             currently implemented since users have yet to be implemented.
         is_scouted: Whether the match scores have been entered yet.
-        is_incomplete: Whether the scout missed some of the scoring data.
+        comments: Any comments from the scouter about the match.
 
         r_1: Red robot 1.
         r_2: Red robot 2.
@@ -48,8 +48,8 @@ class Match(Base):
 
     # TODO: Add this in when users, permissions, etc. is added in.
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
-    is_scouted = Column(Boolean, default=False)
-    is_incomplete = Column(Boolean, default=False)
+    is_scouted = Column(Boolean)
+    comments = Column(UnicodeText)
 
     r_1 = Column(Integer, ForeignKey('robots.robot_number'))
     r_2 = Column(Integer, ForeignKey('robots.robot_number'))
