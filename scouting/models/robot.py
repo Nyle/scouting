@@ -34,7 +34,7 @@ class Robot(Base):
     robot_number = Column(Integer, primary_key=True)
     # TODO: Add this in when users, permissions, etc. is added in.
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
-    is_scouted = Column(Boolean, default=False)
+    is_scouted = Column(Boolean)
 
     description = Column(UnicodeText)
 
@@ -57,3 +57,4 @@ class Robot(Base):
             number: The robot's number.
         """
         self.robot_number = robot_number
+        self.is_scouted = False
