@@ -12,7 +12,6 @@ from ..models import (
     RobotMatch
     )
 
-
 @view_config(route_name='view', renderer='../templates/view.pt')
 def view(request):
     return {}

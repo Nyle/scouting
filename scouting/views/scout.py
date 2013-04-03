@@ -61,7 +61,62 @@ def scout_robot(request):
 
 @view_config(route_name='scout_match', renderer='../templates/scout_match.pt')
 def scout_match(request):
-    return {}
+    message = ''
+    match_number = int(request.matchdict['match_number'])
+    match = DBSession.query(Match).filter(
+        Match.match_number == match_number).first()
+    if match is None:
+        return HTTPFound(location=request.route_url('scout'))
+    is_scouted = match.is_scouted
+    comments = match.comments
+    red = match.red
+    blue = match.blue
+    r_points = match.r_points
+    b_points = match.b_points
+    if request.method == 'POST':
+        comments = request.POST['comments']
+        r_points = {
+            'disc':int(request.POST['r_disc']),
+            'climb':int(request.POST['r_climb']),
+            'foul':int(request.POST['r_foul']),
+            'total':int(request.POST['r_total']),
+            }
+        b_points = {
+            'disc':int(request.POST['b_disc']),
+            'climb':int(request.POST['b_climb']),
+            'foul':int(request.POST['b_foul']),
+            'total':int(request.POST['b_total']),
+            }
+        def verify():
+            message = ''
+            if (r_points['total'] !=
+                r_points['disc'] + r_points['climb'] + r_points['foul']):
+                message = ('Red total points does not equal the sum of all of '
+                           'the red points')
+                return False, message
+            if (b_points['total'] !=
+                b_points['disc'] + b_points['climb'] + b_points['foul']):
+                message = ('Blue total points does not equal the sum of all of '
+                           'the blue points')
+                return False, message
+            return True, message
+        verified, message = verify()
+        if verified:
+            match.comments = comments
+            match.is_scouted = True if 'done' in request.POST else False
+            match.set_points(r_points=r_points, b_points=b_points)
+            return HTTPFound(location=request.route_url('scout_match',
+                match_number=match_number + 1))
+    return {
+        'message':message,
+        'match_number':match_number,
+        'comments':comments,
+        'is_scouted':is_scouted,
+        'red':red,
+        'blue':blue,
+        'r_points':r_points,
+        'b_points':b_points,
+        }
 
 @view_config(route_name='scout_robot_match',
              renderer='../templates/scout_robot_match.pt')
