@@ -37,5 +37,6 @@ def main(argv=sys.argv):
     with transaction.manager:
         for i in range(1, 11):
             DBSession.add(Robot(robot_number=i))
-        DBSession.add(Match(match_number=3, red_robots=(10,10,10),
-                            blue_robots=(10,10,10)))
+        for i in range(1, 11):
+            DBSession.add(Match(match_number=i, red_robots=(10,10,10),
+                                blue_robots=(10,10,10)))
