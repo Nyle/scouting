@@ -13,9 +13,14 @@ from ..models import (
     RobotMatch
     )
 
-@view_config(route_name='scout', renderer='../templates/scout.pt')
-def scout(request):
-    return {}
+@view_config(route_name='pit_scout', renderer='../templates/pit_scout.pt')
+def pit_scout(request):
+    scouted_robots = (DBSession.query(Robot.number).filter(Robot.is_scouted)
+                      .order_by(Robot.robot_number))
+    return {
+        'scouted_robots':scouted_robots,
+        'unscouted_robots':unscouted_robots,
+        }
 
 @view_config(route_name='scout_robot', renderer='../templates/scout_robot.pt')
 def scout_robot(request):
@@ -51,9 +56,12 @@ def scout_robot(request):
         return HTTPFound(location=request.route_url('scout'))
     return {
         'message':message,
-        'gearbox':gearbox,
         'robot':robot.__dict__
         }
+
+@view_config(route_name='scout', renderer='../templates/scout.pt')
+def scout(request):
+    return {}
 
 @view_config(route_name='scout_match', renderer='../templates/scout_match.pt')
 def scout_match(request):
