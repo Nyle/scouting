@@ -6,8 +6,11 @@ from sqlalchemy import (
     UnicodeText,
     Boolean,
     )
-
-from .base import Base
+from .base import (
+    Base,
+    DBSession,
+    ValidationError,
+    )
 
 class Robot(Base):
     """The data gathered for a specific robot during pit scouting.
@@ -58,3 +61,48 @@ class Robot(Base):
         """
         self.robot_number = robot_number
         self.is_scouted = False
+
+    def validate(self, request):
+        """Validate a request.
+
+        Validates the data in the request and returns the validated data.
+
+        Args:
+            request: A request which contains the results of a form into which
+                robot data was entered as POST data.
+
+        Returns:
+            A dictionary of the validated values.
+
+        Raises:
+            ValidationError: The form data in request doesn't validate.
+        """
+        values = {
+            'description':request.POST['description'],
+        	'wheels':request.POST['wheels'],
+        	'gearbox':request.POST['gearbox'],
+        	'motors':request.POST['motors'],
+        	'can_shoot':'can_shoot' in request.POST,
+        	'can_climb':'can_climb' in request.POST,
+        	'can_human_load':'can_human_load' in request.POST,
+        	'can_ground_load':'can_ground_load' in request.POST,
+        	}
+        return values
+
+    def set(self, values):
+        """Set the robots values.
+
+        Sets the values of the robot to values.
+
+        Args:
+            values: A dictionary of values returned by Robot.validate().  These
+                values should have already been validated.
+        """
+        self.description = values['description']
+        self.wheels = values['wheels']
+        self.gearbox = values['gearbox']
+        self.motors = values['motors']
+        self.can_shoot = values['can_shoot']
+        self.can_climb = values['can_climb']
+        self.can_human_load = values['can_human_load']
+        self.can_ground_load = values['can_ground_load']
