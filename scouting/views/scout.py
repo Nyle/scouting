@@ -86,4 +86,35 @@ def scout_match(request):
 @view_config(route_name='scout_robot_match',
              renderer='../templates/scout_robot_match.pt')
 def scout_robot_match(request):
-    return {}
+    message = ''
+    robot_number = int(request.matchdict['robot_number'])
+    match_number = int(request.matchdict['match_number'])
+    robot_match = DBSession.query(RobotMatch).filter(RobotMatch.match_number ==
+        match_number).filter(RobotMatch.robot_number == robot_number).first()
+    if robot_match is None:
+        return HTTPFound(location=request.route_url('scout'))
+    if request.method == 'POST':
+        try:
+            robot_match.set(match.validate(request))
+        except ValidationError as e:
+            return {
+                'message':e.message,
+                'robot_match':e.values,
+                }
+        if 'done' in request.POST:
+            robot_match.is_scouted = True
+        elif 'come_back' in request.POST:
+            robot_match.is_scouted = False
+        DBSession.add(robot_match)
+        return HTTPFound(location=request.route_url(
+            'scout_robot_match',
+            match_number=robot_match.match_number + 1,
+            robot_number=getattr(
+                DBSession.query(Match).filter(Match.match_number==
+                    robot_match.match_number).first(),
+                robot_match.position
+                )))
+    return {
+        'message':message,
+        'robot_match':robot_match.__dict__,
+        }
