@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Scout Match ${match_number}</title>
+    <title>Scout Match ${match['match_number']}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-    <h1>Match ${match_number}</h1>
+    <h1>Match ${match['match_number']}</h1>
     ${message}
-    <form action="${request.route_url('scout_match', match_number=match_number)}" method="post">
+    <form action="${request.route_url('scout_match', match_number=match['match_number'])}" method="post">
         <input type="submit" name="done" value="Done">
+        <input type="submit" name="come_back" value="Come Back Later">
         <fieldset>
             <table>
                 <tr>
@@ -18,27 +19,27 @@
                 </tr>
                 <tr>
                     <th>Disc</th>
-                    <td><input type="number" min="0" pattern="\d+" name="r_disc" value="${r_points['disc']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="b_disc" value="${b_points['disc']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="r_disc" value="${match['r_disc']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="b_disc" value="${match['b_disc']}" required></td>
                 </tr>
                 <tr>
                     <th>Climb</th>
-                    <td><input type="number" min="0" pattern="\d+" name="r_climb" value="${r_points['climb']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="b_climb" value="${b_points['climb']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="r_climb" value="${match['r_climb']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="b_climb" value="${match['b_climb']}" required></td>
                 </tr>
                 <tr>
                     <th>Foul</th>
-                    <td><input type="number" min="0" pattern="\d+" name="r_foul" value="${r_points['foul']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="b_foul" value="${b_points['foul']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="r_foul" value="${match['r_foul']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="b_foul" value="${match['b_foul']}" required></td>
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td><input type="number" min="0" pattern="\d+" name="r_total" value="${r_points['total']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="b_total" value="${b_points['total']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="r_total" value="${match['r_total']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="b_total" value="${match['b_total']}" required></td>
                 </tr>
             </table>
             <label for="comments">Comments/Notes:</label><br>
-            <textarea name="comments" rows="2" cols="50" id="comments">${comments}</textarea><br>
+            <textarea name="comments" rows="2" cols="50" id="comments">${match['comments']}</textarea><br>
         </fieldset>
     </form>
     <h2>Teams</h2>
@@ -47,9 +48,17 @@
             <th>Red<th>
             <th>Blue</th>
         </tr>
-        <tr tal:repeat="(red_number, blue_number) zip(red, blue)">
-            <td>${red_number}</td>
-            <td>${blue_number}</td>
+        <tr>
+            <td>${match['r_1']}</td>
+            <td>${match['b_1']}</td>
+        </tr>
+        <tr>
+            <td>${match['r_2']}</td>
+            <td>${match['b_2']}</td>
+        </tr>
+        <tr>
+            <td>${match['r_3']}</td>
+            <td>${match['b_3']}</td>
         </tr>
     </table>
 </body>

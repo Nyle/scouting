@@ -10,6 +10,7 @@ from sqlalchemy import (
 from .base import (
     Base,
     DBSession,
+    ValidationError,
     )
 
 from .robot_match import RobotMatch
@@ -95,73 +96,94 @@ class Match(Base):
         # Create the robot matches for the match
         # TODO: Find out how to make it so if the match is deleted the robot
         #       matches will be too
-        for robot_number in self.red + self.blue:
-            DBSession.add(RobotMatch(match_number=match_number,
-                                     robot_number=robot_number))
+        DBSession.add(RobotMatch(match_number=match_number,
+                                 robot_number=self.r_1,
+                                 position='r_1'))
+        DBSession.add(RobotMatch(match_number=match_number,
+                                 robot_number=self.r_2,
+                                 position='r_2'))
+        DBSession.add(RobotMatch(match_number=match_number,
+                                 robot_number=self.r_3,
+                                 position='r_3'))
+        DBSession.add(RobotMatch(match_number=match_number,
+                                 robot_number=self.b_1,
+                                 position='b_1'))
+        DBSession.add(RobotMatch(match_number=match_number,
+                                 robot_number=self.b_2,
+                                 position='b_2'))
+        DBSession.add(RobotMatch(match_number=match_number,
+                                 robot_number=self.b_3,
+                                 position='b_3'))
 
-    @property
-    def red(self):
-        """Get the red alliance teams.
+    def validate(self, request):
+        """Validate a request.
 
-        Returns:
-            A  tuple of the red alliance teams.
-        """
-        return self.r_1, self.r_2, self.r_3
-
-    @property
-    def blue(self):
-        """Get the blue alliance teams.
-
-        Returns:
-            A  tuple of the blue alliance teams.
-        """
-        return self.b_1, self.b_2, self.b_3
-
-    @property
-    def r_points(self):
-        """Get the red alliance points.
-
-        Returns:
-            A dictionary of the points scored by the red alliance with the keys
-            disc, climb, foul, total.
-        """
-        return {
-            'disc':self.r_disc,
-            'climb':self.r_climb,
-            'foul':self.r_foul,
-            'total':self.r_total,
-            }
-
-    @property
-    def b_points(self):
-        """Get the blue alliance points.
-
-        Returns:
-            A dictionary of the points scored by the blue alliance with the keys
-            disc, climb, foul, total.
-        """
-        return {
-            'disc':self.b_disc,
-            'climb':self.b_climb,
-            'foul':self.b_foul,
-            'total':self.b_total,
-            }
-
-    def set_points(self, r_points, b_points):
-        """Set the matches points.
-
-        Uses two dictionaries of the form output by r_points() and b_points() to
-        set the matches points.
+        Validates the data in the request and returns the validated data.
 
         Args:
-            r_points: A dictionary containing the red alliance points.
-            b_points: A dictionary containing the blue alliance points.
+            request: A request which contains the results of a form into which
+                match data was entered as POST data.
+
+        Returns:
+            A dictionary of the validated values.
+
+        Raises:
+            ValidationError: The form data in request doesn't validate.
+
         """
-        r_disc = r_points['disc']
-        r_climb = r_points['climb']
-        r_foul = r_points['foul']
-        r_total = r_points['total']
-        b_disc = b_points['disc']
-        b_climb = b_points['climb']
-        b_foul = b_points['foul']
-        b_total = b_points['total']
+        values = {
+            'r_disc':request.POST['r_disc'],
+            'r_climb':request.POST['r_climb'],
+            'r_foul':request.POST['r_foul'],
+            'r_total':request.POST['r_total'],
+            'b_disc':request.POST['b_disc'],
+            'b_climb':request.POST['b_climb'],
+            'b_foul':request.POST['b_foul'],
+            'b_total':request.POST['b_total'],
+            'comments':request.POST['comments']
+            }
+        try:
+            values['r_disc'] = int(values['r_disc'])
+            values['r_climb'] = int(values['r_climb'])
+            values['r_foul'] = int(values['r_foul'])
+            values['r_total'] = int(values['r_total'])
+            values['b_disc'] = int(values['b_disc'])
+            values['b_climb'] = int(values['b_climb'])
+            values['b_foul'] = int(values['b_foul'])
+            values['b_total'] = int(values['b_total'])
+        except ValueError:
+            raise ValidationError(
+                'All point values must be integers',
+                self.__dict__().copy().update(values)
+                )
+        if r_disc + r_climb + r_foul != r_total:
+            raise ValidationError(
+                ('The sum of all red point categories must be equal to the'
+                 'total red points'),
+                self.__dict__().copy().update(values)
+                )
+        if b_disc + b_climb + b_foul != b_total:
+            raise ValidationError(
+                ('The sum of all blue point categories must be equal to the'
+                 'total blue points'),
+                self.__dict__().copy().update(values)
+                )
+        return values
+
+    def set(self, values):
+        """Set the match's values.
+
+        Sets the values of the match to values.
+
+        Args:
+            values: A dictionary of values returned by Match.validate().  These
+                values should have already been validated.
+        """
+        self.r_disc = values['r_disc']
+        self.r_climb = values['r_climb']
+        self.r_foul = values['r_foul']
+        self.r_total = values['r_total']
+        self.b_disc = values['b_disc']
+        self.b_climb = values['b_climb']
+        self.b_foul = values['b_foul']
+        self.b_total = values['b_total']
