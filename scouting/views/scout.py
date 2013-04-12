@@ -6,6 +6,7 @@ from pyramid.httpexceptions import (
 from pyramid.view import view_config
 from sqlalchemy.exc import DBAPIError
 from ..models import (
+    ValidationError,
     DBSession,
     Robot,
     Match,
