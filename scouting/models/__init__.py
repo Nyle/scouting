@@ -1,6 +1,7 @@
 from .base import (
     DBSession,
     Base,
+    ValidationError,
     )
 
 from .robot import Robot
