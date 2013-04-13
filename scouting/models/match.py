@@ -70,27 +70,23 @@ class Match(Base):
     b_foul = Column(Integer)
     b_total = Column(Integer)
 
-    def __init__(self, match_number, red_robots, blue_robots):
+    def __init__(self, match_number, r_1, r_2, r_3, b_1, b_2, b_3):
         """Initialise the match.
 
         Initialises the match with its number and the alliance teams.
 
         Args:
             match_number: The match number.
-            red_robots: A sequence type object or a dictionary with 0, 1, and 2
-                as keys, corresponding to teams 1, 2, and 3 respectively
-                containing the red robots.
-            blue_robots: A sequence type object or a dictionary with 0, 1, and 2
-                as keys, corresponding to teams 1, 2, and 3 respectively
-                containing the blue robots.
+            r_1, r_2, r_3: The red alliance's robot's numbers
+            b_1, b_2, b_3: The blue alliance's robot's numbers
         """
         self.match_number = match_number
-        self.r_1 = red_robots[0]
-        self.r_2 = red_robots[1]
-        self.r_3 = red_robots[2]
-        self.b_1 = blue_robots[0]
-        self.b_2 = blue_robots[1]
-        self.b_3 = blue_robots[2]
+        self.r_1 = r_1
+        self.r_2 = r_2
+        self.r_3 = r_3
+        self.b_1 = b_1
+        self.b_2 = b_2
+        self.b_3 = b_3
         is_scouted = False
 
         # Create the robot matches for the match
