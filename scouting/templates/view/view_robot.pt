@@ -7,21 +7,19 @@
 <body>
     <a href="${request.route_url('view')}">Back</a>
     <h1>Team ${robot.robot_number}'s Robot</h1>
-    <div id="overview">
-        <h2>Description</h2>
-        <p>${robot.description}</p>
-
-        <h2>Wheels</h2>
-        <p>${robot.wheels}</p>
-
-        <h2>Gearbox</h2>
-        <p>${robot.gearbox}</p>
-
-        <h2>Motors</h2>
-        <p>${robot.motors}</p>
-    </div>
-    <div tal:repeat="robot_match robot_matches" id="match_${robot_match.match_number}">
-
+    <div id="shooting">
+        <h2>Auto</h2>
+        <table>
+            <tr>
+                <th>Auto</th>
+                <th>3</th>
+                <th>2</th>
+                <th>1</th>
+                <th>Missed</th>
+                <th>Points</th>
+            </tr>
+            <tr tal:repeat="
+        </table>
     </div>
 </body>
 </html>

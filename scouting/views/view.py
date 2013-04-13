@@ -27,18 +27,26 @@ def view_robot(request):
     robot_number = int(request.matchdict['robot_number'])
     robot = DBSession.query(Robot).filter(
         Robot.robot_number==robot_number).first()
-    robot_matches = (DBSession
-                     .query(RobotMatch)
-                     .filter(RobotMatch
-                     .robot_number==robot_number)
-                     .order_by(RobotMatch.match_number)
-                     .all()
-                     )
+    scouted_robot_matches = (DBSession
+                             .query(RobotMatch)
+                             .filter(RobotMatch.robot_number==robot_number)
+                             .filter(RobotMatch.is_scouted==True)
+                             .order_by(RobotMatch.match_number)
+                             .all()
+                             )
+    unscouted_robot_matches = (DBSession
+                               .query(RobotMatch)
+                               .filter(RobotMatch.robot_number==robot_number)
+                               .filter(RobotMatch.is_scouted==False)
+                               .order_by(RobotMatch.match_number)
+                               .all()
+                               )
     if robot is None:
         return HTTPFound(location=request.route_url('view'))
     return {
         'robot':robot,
-        'robot_matches':robot_matches
+        'scouted_robot_matches':scouted_robot_matches,
+        'unscouted_robot_matches':unscouted_robot_matches,
         }
 
 @view_config(route_name='view_match',
