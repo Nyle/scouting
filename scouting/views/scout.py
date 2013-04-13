@@ -72,6 +72,9 @@ def scout_robot(request):
                 robot_number=unscouted_robots.first().robot_number))
         return HTTPFound(location=request.route_url('scout'))
     return {
+        'page_title':'Robot ' + str(robot_number),
+        'submit_location':request.route_url('scout_robot',
+                                            robot_number=robot_number),
         'message':message,
         'robot':robot.__dict__
         }
@@ -101,6 +104,9 @@ def scout_match(request):
         return HTTPFound(location=request.route_url('scout_match',
             match_number=match_number + 1))
     return {
+        'page_title':'Match ' + str(match_number),
+        'submit_location':request.route_url('scout_match',
+                                            match_number=match_number),
         'message':message,
         'match':match.__dict__,
         }
@@ -137,6 +143,11 @@ def scout_robot_match(request):
                 robot_match.position
                 )))
     return {
+        'page_title':('Robot ' + str(robot_number) +
+                      ', Match ' + str(match_number)),
+        'submit_location':request.route_url('scout_robot_match',
+                                            robot_number=robot_number,
+                                            match_number=match_number),
         'message':message,
         'robot_match':robot_match.__dict__,
         }
