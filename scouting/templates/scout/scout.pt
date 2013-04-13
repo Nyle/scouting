@@ -6,7 +6,7 @@
 </head>
 <body>
     <a href="${request.route_url('home')}">Back</a>
-    <h1>Scout</h1>
+    <h1>Matches</h1>
     <table>
         <tr>
             <th>Number</th>
@@ -47,6 +47,26 @@
             <td>
                 <a href="${request.route_url('scout_robot_match', match_number=match.match_number, robot_number=match.b_3)}">
                     ${match.b_3}
+                </a>
+            </td>
+        </tr>
+    </table>
+    <h1>Unscouted Robots</h1>
+    <table>
+        <tr tal:repeat="robot unscouted_robots">
+            <td>
+                <a href="${request.route_url('scout_robot', robot_number=robot.robot_number)}">
+                    ${robot.robot_number}
+                </a>
+            </td>
+        </tr>
+    </table>
+    <h1>Scouted Robots</h1>
+    <table>
+        <tr tal:repeat="robot scouted_robots">
+            <td>
+                <a href="${request.route_url('scout_robot', robot_number=robot.robot_number)}">
+                    ${robot.robot_number}
                 </a>
             </td>
         </tr>
