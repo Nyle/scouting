@@ -12,7 +12,7 @@ from ..models import (
     RobotMatch
     )
 
-@view_config(route_name='view', renderer='../templates/view/view.pt')
+@view_config(route_name='view', renderer='../templates/view.pt')
 def view(request):
     robots = DBSession.query(Robot).order_by(Robot.robot_number).all()
     matches = DBSession.query(Match).order_by(Match.match_number).all()

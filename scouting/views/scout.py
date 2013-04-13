@@ -13,7 +13,7 @@ from ..models import (
     RobotMatch
     )
 
-@view_config(route_name='scout', renderer='../templates/scout/scout.pt')
+@view_config(route_name='scout', renderer='../templates/scout.pt')
 def scout(request):
     unscouted_robots = (DBSession
                         .query(Robot.robot_number)
