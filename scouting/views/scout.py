@@ -13,7 +13,7 @@ from ..models import (
     RobotMatch
     )
 
-@view_config(route_name='pit_scout', renderer='../templates/pit_scout.pt')
+@view_config(route_name='pit_scout', renderer='../templates/scout/pit_scout.pt')
 def pit_scout(request):
     scouted_robots = (DBSession.query(Robot.number).filter(Robot.is_scouted)
                       .order_by(Robot.robot_number))
@@ -22,7 +22,8 @@ def pit_scout(request):
         'unscouted_robots':unscouted_robots,
         }
 
-@view_config(route_name='scout_robot', renderer='../templates/scout_robot.pt')
+@view_config(route_name='scout_robot',
+             renderer='../templates/scout/scout_robot.pt')
 def scout_robot(request):
     message = ''
     robot_number = int(request.matchdict['robot_number'])
@@ -59,11 +60,12 @@ def scout_robot(request):
         'robot':robot.__dict__
         }
 
-@view_config(route_name='scout', renderer='../templates/scout.pt')
+@view_config(route_name='scout', renderer='../templates/scout/scout.pt')
 def scout(request):
     return {}
 
-@view_config(route_name='scout_match', renderer='../templates/scout_match.pt')
+@view_config(route_name='scout_match',
+             renderer='../templates/scout/scout_match.pt')
 def scout_match(request):
     message = ''
     match_number = int(request.matchdict['match_number'])
@@ -92,7 +94,7 @@ def scout_match(request):
         }
 
 @view_config(route_name='scout_robot_match',
-             renderer='../templates/scout_robot_match.pt')
+             renderer='../templates/scout/scout_robot_match.pt')
 def scout_robot_match(request):
     message = ''
     robot_number = int(request.matchdict['robot_number'])
