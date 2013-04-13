@@ -15,11 +15,21 @@ from ..models import (
 
 @view_config(route_name='pit_scout', renderer='../templates/scout/pit_scout.pt')
 def pit_scout(request):
-    scouted_robots = (DBSession.query(Robot.number).filter(Robot.is_scouted)
-                      .order_by(Robot.robot_number))
+    unscouted_robots = (DBSession
+                        .query(Robot.robot_number)
+                        .filter(Robot.is_scouted==False)
+                        .order_by(Robot.robot_number)
+                        .all()
+                        )
+    scouted_robots = (DBSession
+                      .query(Robot.robot_number)
+                      .filter(Robot.is_scouted==True)
+                      .order_by(Robot.robot_number)
+                      .all()
+                      )
     return {
-        'scouted_robots':scouted_robots,
         'unscouted_robots':unscouted_robots,
+        'scouted_robots':scouted_robots,
         }
 
 @view_config(route_name='scout_robot',
