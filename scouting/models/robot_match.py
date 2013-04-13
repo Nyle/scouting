@@ -6,7 +6,6 @@ from sqlalchemy import (
     UnicodeText,
     Boolean,
     )
-
 from .base import Base
 
 class RobotMatch(Base):
@@ -46,7 +45,6 @@ class RobotMatch(Base):
             climbing.
         frisbees_dumped: How many frisbees the robot dumped into the pyramid
             goal.
-        did_fall_off_pyramid: Whether the robot fell of the pyramid while climbing.
         climbing_description: A description of how the robot climbed in the
             match, how sturdy it looked, strategy suggestions, etc.
 
@@ -93,7 +91,6 @@ class RobotMatch(Base):
     climb_finish = Column(Integer)
     level_reached = Column(Integer)
     frisbees_dumped = Column(Integer)
-    did_fall_off_pyramid = Column(Boolean)
     climbing_description = Column(UnicodeText)
 
     did_human_load = Column(Boolean)
@@ -133,10 +130,9 @@ class RobotMatch(Base):
 
         """
         values = {
-            'is_scouted':request.POST['comments'],
             'robot_match_comments':request.POST['robot_match_comments'],
             'did_foul':'did_foul' in request.POST,
-            'did_technical_foul':request.POST['did_technical_foul'],
+            'did_technical_foul':'did_technical_foul' in request.POST,
             'foul_description':request.POST['foul_description'],
             'did_shoot':'did_shoot' in request.POST,
             'auto_1':request.POST['auto_1'],
@@ -152,10 +148,9 @@ class RobotMatch(Base):
             'did_climb':'did_climb' in request.POST,
             'climb_start':request.POST['climb_start'],
             'climb_finish':request.POST['climb_finish'],
-            'level_reached':request.POST['level_reached'],
+            'level_reached':request.POST.get('level_reached'),
             'frisbees_dumped':request.POST['frisbees_dumped'],
-            'did_fall_off_pyramid':'did_fall_off_pyramid' in request.POST,
-            'climbing_dscription':request.POST['climbing_description'],
+            'climbing_description':request.POST['climbing_description'],
             'did_human_load':'did_human_load' in request.POST,
             'did_ground_load':'did_ground_load' in request.POST,
             'auto_frisbees_ground_loaded':\
@@ -177,7 +172,6 @@ class RobotMatch(Base):
                 values['teleop_1'] = int(values['teleop_1'])
                 values['teleop_2'] = int(values['teleop_2'])
                 values['teleop_3'] = int(values['teleop_3'])
-                values['teleop_4'] = int(values['teleop_4'])
                 values['teleop_5'] = int(values['teleop_5'])
                 values['teleop_miss'] = int(values['teleop_miss'])
             except ValueError:
@@ -233,18 +227,34 @@ class RobotMatch(Base):
             self.teleop_5 = values['teleop_5']
             self.teleop_miss = values['teleop_miss']
             self.shooting_description = values['shooting_description']
+        else:
+            self.auto_1 = 0
+            self.auto_2 = 0
+            self.auto_3 = 0
+            self.auto_miss = 0
+            self.teleop_1 = 0
+            self.teleop_2 = 0
+            self.teleop_3 = 0
+            self.teleop_5 = 0
+            self.teleop_miss = 0
         self.did_climb = values['did_climb']
         if self.did_climb:
             self.climb_start = values['climb_start']
             self.climb_finish = values['climb_finish']
             self.level_reached = values['level_reached']
             self.frisbees_dumped = values['frisbees_dumped']
-            self.did_fall_off_pyramid = values['did_fall_off_pyramid']
             self.climbing_description = values['climbing_description']
+        else:
+            self.climb_start = 0
+            self.climb_finish = 0
+            self.level_reached = 0
+            self.frisbees_dumped = 0
         self.did_human_load = values['did_human_load']
         self.did_ground_load = values['did_ground_load']
         if self.did_ground_load:
             self.auto_frisbees_ground_loaded =\
                 values['auto_frisbees_ground_loaded']
+        else:
+            self.auto_frisbees_ground_loaded = 0
         if self.did_human_load or self.did_ground_load:
             self.loading_description = values['loading_description']
