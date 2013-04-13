@@ -165,7 +165,7 @@ class RobotMatch(Base):
         if ((values['did_foul'] or values['did_technical_foul']) and
             not values['foul_description']):
             raise ValidationError(
-                'Please enter a description of the foul(s) the robot committed'
+                'Please enter a description of the foul(s) the robot committed',
                 self.__dict__().copy().update(values)
                 )
         if values['did_shoot']:
