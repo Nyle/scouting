@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team ${robot.robot_number}'s Robot</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <a href="${request.route_url('view')}">Back</a>
+    <h1>Team ${robot.robot_number}'s Robot</h1>
+    <div id="overview">
+        <h2>Description</h2>
+        <p>${robot.description}</p>
+
+        <h2>Wheels</h2>
+        <p>${robot.wheels}</p>
+
+        <h2>Gearbox</h2>
+        <p>${robot.gearbox}</p>
+
+        <h2>Motors</h2>
+        <p>${robot.motors}</p>
+    </div>
+    <div tal:repeat="robot_match robot_matches" id="match_${robot_match.match_number}">
+
+    </div>
+</body>
+</html>
