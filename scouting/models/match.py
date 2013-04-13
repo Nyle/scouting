@@ -150,20 +150,20 @@ class Match(Base):
         except ValueError:
             raise ValidationError(
                 'All point values must be integers',
-                self.__dict__().copy().update(values)
+                self.__dict__.copy().update(values)
                 )
         if (values['r_disc'] + values['r_climb'] + values['r_foul'] !=
             values['r_total']):
             raise ValidationError(
                 ('The sum of all red point categories must be equal to the'
                  'total red points'),
-                self.__dict__().copy().update(values)
+                self.__dict__.copy().update(values)
                 )
         if b_disc + b_climb + b_foul != b_total:
             raise ValidationError(
                 ('The sum of all blue point categories must be equal to the'
                  'total blue points'),
-                self.__dict__().copy().update(values)
+                self.__dict__.copy().update(values)
                 )
         return values
 

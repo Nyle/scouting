@@ -52,6 +52,9 @@ def scout_robot(request):
             values = robot.validate(request)
         except ValidationError as e:
             return {
+                'page_title':'Robot ' + str(robot_number),
+                'submit_location':request.route_url('scout_robot',
+                                                    robot_number=robot_number),
                 'message':e.message,
                 'robot':e.values,
                 }
@@ -94,6 +97,9 @@ def scout_match(request):
             values = match.validate(request)
         except ValidationError as e:
             return {
+                'page_title':'Match ' + str(match_number),
+                'submit_location':request.route_url('scout_match',
+                                                    match_number=match_number),
                 'message':e.message,
                 'match':e.values,
                 }
@@ -128,6 +134,11 @@ def scout_robot_match(request):
             values = robot_match.validate(request)
         except ValidationError as e:
             return {
+                'page_title':('Robot ' + str(robot_number) +
+                      ', Match ' + str(match_number)),
+                'submit_location':request.route_url('scout_robot_match',
+                                                    robot_number=robot_number,
+                                                    match_number=match_number),
                 'message':e.message,
                 'robot_match':e.values,
                 }

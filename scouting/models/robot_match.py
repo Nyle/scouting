@@ -161,7 +161,7 @@ class RobotMatch(Base):
             not values['foul_description']):
             raise ValidationError(
                 'Please enter a description of the foul(s) the robot committed',
-                self.__dict__().copy().update(values)
+                self.__dict__.copy().update(values)
                 )
         if values['did_shoot']:
             try:
@@ -177,7 +177,7 @@ class RobotMatch(Base):
             except ValueError:
                 raise ValidationError(
                     'You must enter a number for all of the shooting numbers',
-                    self.__dict__().copy().update(values)
+                    self.__dict__.copy().update(values)
                     )
         if values['did_climb']:
             try:
@@ -188,7 +188,7 @@ class RobotMatch(Base):
             except ValueError:
                 raise ValidationError(
                     'All climbing related numbers must be numbers',
-                    self.__dict__().copy().update(values)
+                    self.__dict__.copy().update(values)
                     )
         if values['did_ground_load']:
             try:
@@ -197,7 +197,7 @@ class RobotMatch(Base):
             except ValueError:
                 raise ValidationError(
                     'All numbers of frisbees ground loaded must be numbers',
-                    self.__dict__().copy().update(values)
+                    self.__dict__.copy().update(values)
                     )
         return values
 
