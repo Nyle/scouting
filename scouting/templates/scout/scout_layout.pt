@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html metal:define-macro="scout">
+<head>
+    <title>${page_title}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <a href="${request.route_url('scout')}">Back</a>
+    <h1>${page_title}</h1>
+    ${message}
+    <form action="${submit_location}" method="post">
+        <input type="submit" name="done" value="Done">
+        <input type="submit" name="come_back" value="Come Back Later">
+        <tal:block metal:define-slot="form">
+        </tal:block>
+    </form>
+</body>
+</html>

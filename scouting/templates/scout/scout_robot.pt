@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Scout Robot ${robot['robot_number']}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-    <a href="${request.route_url('pit_scout')}">Back</a>
-    <h1>Team ${robot['robot_number']}'s Robot</h1>
-    ${message}
-    <form action="${request.route_url('scout_robot', robot_number=robot['robot_number'])}" method="post">
-        <input type="submit" name="done" value="Done">
-        <input type="submit" name="come_back" value="Come Back Later">
+<tal:block metal:use-macro="load: scout_layout.pt">
+    <tal:block metal:fill-slot="form">
         <fieldset>
             <ledgend>General:</ledgend><br>
             <label for="description">Description/Notes:</label><br>
@@ -43,6 +32,5 @@
             <input type="checkbox" tal:attributes="checked robot['can_ground_load']" name="can_ground_load" id="can_ground_load">
             <label for="can_ground_load">Ground Loading</label><br>
         </fieldset>
-    </form>
-</body>
-</html>
+    </tal:block>
+<tal:block>

@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Scout Robot ${robot_match['robot_number']} in Match ${robot_match['match_number']}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-    <a href="${request.route_url('scout')}">Back</a>
-    <h1>Match ${robot_match['match_number']} Team ${robot_match['robot_number']}'s Robot</h1>
-    ${message}
-    <form action="${request.route_url('scout_robot_match',
-                                      robot_number=robot_match['robot_number'],
-                                      match_number=robot_match['match_number'])}" method="post">
-        <input type="submit" name="done" value="Done">
-        <input type="submit" name="come_back" value="Come Back Later"><br>
-
+<tal:block metal:use-macro="load: scout_layout.pt">
+    <tal:block metal:fill-slot="form">
         <label for="robot_match_comments">Comments and Strategy Suggestions</label><br>
         <textarea name="robot_match_comments" rows="2" cols="50" id="robot_match_comments">${robot_match['robot_match_comments']}</textarea><br>
         <fieldset>
@@ -88,6 +74,6 @@
             <label for="loading_description">Description and Comments on the Robot's Loading</label><br>
             <textarea name="loading_description" rows="2" cols="50" id="loading_description">${robot_match['loading_description']}</textarea><br>
         </fieldset>
-    </form>
-</body>
-</html>
+    </tal:block>
+<tal:block>
+
