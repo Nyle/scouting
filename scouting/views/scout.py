@@ -49,16 +49,17 @@ def scout_robot(request):
         return HTTPFound(location=request.route_url('scout'))
     if request.method == 'POST':
         try:
-            robot.set(robot.validate(request))
+            values = robot.validate(request)
         except ValidationError as e:
             return {
                 'message':e.message,
                 'robot':e.values,
                 }
         if 'done' in request.POST:
-            robot.is_scouted = True
+            values['is_scouted'] = True
         elif 'come_back' in request.POST:
-            robot.is_scouted = False
+            values['is_scouted'] = False
+        robot.set(values)
         DBSession.add(robot)
         unscouted_robots = (DBSession.query(Robot).filter(Robot.is_scouted ==
             False).order_by(Robot.robot_number))
@@ -90,16 +91,17 @@ def scout_match(request):
         return HTTPFound(location=request.route_url('scout'))
     if request.method == 'POST':
         try:
-            match.set(match.validate(request))
+            values = match.validate(request)
         except ValidationError as e:
             return {
                 'message':e.message,
                 'match':e.values,
                 }
         if 'done' in request.POST:
-            match.is_scouted = True
+            values['is_scouted'] = True
         elif 'come_back' in request.POST:
-            match.is_scouted = False
+            values['is_scouted'] = False
+        match.set(values)
         DBSession.add(robot)
         return HTTPFound(location=request.route_url('scout_match',
             match_number=match_number + 1))
@@ -123,16 +125,17 @@ def scout_robot_match(request):
         return HTTPFound(location=request.route_url('scout'))
     if request.method == 'POST':
         try:
-            robot_match.set(match.validate(request))
+            values = robot_match.validate(request)
         except ValidationError as e:
             return {
                 'message':e.message,
                 'robot_match':e.values,
                 }
         if 'done' in request.POST:
-            robot_match.is_scouted = True
+            values['is_scouted'] = True
         elif 'come_back' in request.POST:
-            robot_match.is_scouted = False
+            values['is_scouted'] = False
+        robot_match.set(values)
         DBSession.add(robot_match)
         return HTTPFound(location=request.route_url(
             'scout_robot_match',
