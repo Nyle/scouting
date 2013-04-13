@@ -10,7 +10,7 @@
     ${message}
     <form action="${submit_location}" method="post">
         <input type="submit" name="done" value="Done">
-        <input type="submit" name="come_back" value="Come Back Later">
+        <input type="submit" name="come_back" value="Come Back Later"><br>
         <tal:block metal:define-slot="form">
         </tal:block>
     </form>

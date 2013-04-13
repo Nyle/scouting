@@ -152,7 +152,8 @@ class Match(Base):
                 'All point values must be integers',
                 self.__dict__().copy().update(values)
                 )
-        if r_disc + r_climb + r_foul != r_total:
+        if (values['r_disc'] + values['r_climb'] + values['r_foul'] !=
+            values['r_total']):
             raise ValidationError(
                 ('The sum of all red point categories must be equal to the'
                  'total red points'),
