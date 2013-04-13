@@ -2,10 +2,13 @@
     <tal:block metal:fill-slot="form">
         <label for="robot_match_comments">Comments and Strategy Suggestions</label><br>
         <textarea name="robot_match_comments" rows="2" cols="50" id="robot_match_comments">${robot_match['robot_match_comments']}</textarea><br>
-        <fieldset>
-            <ledgend>Fouls</ledgend><br>
-            <input type="checkbox" tal:attributes="checked robot_match['did_foul']" name="did_foul" id="did_foul">
-            <label for="did_foul">Fouled</label><br>
+
+        <ledgend>Fouls</ledgend><br>
+
+        <input type="checkbox" tal:attributes="checked robot_match['did_foul']" name="did_foul" id="did_foul">
+        <label for="did_foul">Fouled</label><br>
+
+        <fieldset id="fouls">
 
             <input type="checkbox" tal:attributes="checked robot_match['did_technical_foul']" name="did_technical_foul" id="did_technical_foul">
             <label for="did_technical_foul">Technical Fouled</label><br>
@@ -13,11 +16,13 @@
             <label for="foul_description">Description of any Fouls</label><br>
             <textarea name="foul_description" rows="2" cols="50" id="foul_description">${robot_match['foul_description']}</textarea><br>
         </fieldset>
-        <fieldset>
-            <ledgend>Shooting</ledgend><br>
-            <input type="checkbox" tal:attributes="checked robot_match['did_shoot']" name="did_shoot" id="did_shoot">
-            <label for="did_shoot">Shot</label><br>
 
+        <ledgend>Shooting</ledgend><br>
+
+        <input type="checkbox" tal:attributes="checked robot_match['did_shoot']" name="did_shoot" id="did_shoot">
+        <label for="did_shoot">Shot</label><br>
+
+        <fieldset id="shooting">
             <table>
                 <tr>
                     <th>Shots</th>
@@ -31,24 +36,50 @@
                     <td><input type="number" min="0" pattern="\d+" name="auto_1" value="${robot_match['auto_1']}"></td>
                     <td><input type="number" min="0" pattern="\d+" name="auto_2" value="${robot_match['auto_2']}"></td>
                     <td><input type="number" min="0" pattern="\d+" name="auto_3" value="${robot_match['auto_3']}"></td>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_missed" value="${robot_match['auto_miss']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="auto_miss" value="${robot_match['auto_miss']}"></td>
                 <tr>
                 <tr>
                     <th>Teleop</th>
                     <td><input type="number" min="0" pattern="\d+" name="teleop_1" value="${robot_match['teleop_1']}"></td>
                     <td><input type="number" min="0" pattern="\d+" name="teleop_2" value="${robot_match['teleop_2']}"></td>
                     <td><input type="number" min="0" pattern="\d+" name="teleop_3" value="${robot_match['teleop_3']}"></td>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_missed" value="${robot_match['teleop_miss']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="teleop_miss" value="${robot_match['teleop_miss']}"></td>
                 <tr>
             </table>
-            <label for="teleop_5">Pyramid shots made</label><br>
+            <label for="teleop_5">Pyramid Goal (5pt) Shots Made</label><br>
             <input type="number" min="0" pattern="\d+" name="teleop_5" value="${robot_match['teleop_5']}"><br>
 
-            <label for="shooting_description">Description and Comments on the Robot's Shooting</label><br>
+            <label for="shooting_description">Comments on the Robot's Shooting</label><br>
             <textarea name="shooting_description" rows="2" cols="50" id="shooting_description">${robot_match['shooting_description']}</textarea><br>
         </fieldset>
-        <fieldset>
-            <ledgend>Loading</ledgend><br>
+
+        <ledgend>Climbing</ledgend><br>
+
+        <input type="checkbox" tal:attributes="checked robot_match['did_climb']" name="did_climb" id="did_climb">
+        <label for="did_climb">Climbed</label><br>
+
+        <fieldset id="climbing">
+            <label for="climb_start">Time Left at Start of Climb</label><br>
+            <input type="number" min="0" pattern="\d+" name="climb_start" value="${robot_match['climb_start']}"><br>
+
+            <label for="climb_finish">Time Left at Finish of Climb</label><br>
+            <input type="number" min="0" pattern="\d+" name="climb_finish" value="${robot_match['climb_finish']}"><br>
+
+            <label for="level_reached">Level Reached</label><br>
+            <input type="radio" name="level_reached" value="0" tal:attributes="checked robot_match['level_reached'] == 0" id="0"><label for="0">0</label>
+            <input type="radio" name="level_reached" value="10" tal:attributes="checked robot_match['level_reached'] == 10" id="10"><label for="10">10</label>
+            <input type="radio" name="level_reached" value="20" tal:attributes="checked robot_match['level_reached'] == 20" id="20"><label for="20">20</label>
+            <input type="radio" name="level_reached" value="30" tal:attributes="checked robot_match['level_reached'] == 30" id="30"><label for="30">30</label><br>
+
+            <label for="frisbees_dumped">Frisbees Dumped</label><br>
+            <input type="number" min="0" pattern="\d+" name="frisbees_dumped" value="${robot_match['frisbees_dumped']}"><br>
+
+            <label for="climbing_description">Comments on the Robot's Climbing</label><br>
+            <textarea name="climbing_description" rows="2" cols="50" id="climbing_description">${robot_match['climbing_description']}</textarea><br>
+        </fieldset>
+
+        <ledgend>Loading</ledgend><br>
+        <fieldset id="loading">
             <input type="checkbox" tal:attributes="checked robot_match['did_human_load']" name="did_human_load" id="did_human_load">
             <label for="did_human_load">Human Loaded</label><br>
 
@@ -58,7 +89,7 @@
             <label for="auto_frisbees_ground_loaded">Frisbees Ground Loaded During Auto</label><br>
             <input type="number" min="0" pattern="\d+" name="auto_frisbees_ground_loaded" value="${robot_match['auto_frisbees_ground_loaded']}"><br>
 
-            <label for="loading_description">Description and Comments on the Robot's Loading</label><br>
+            <label for="loading_description">Comments on the Robot's Loading</label><br>
             <textarea name="loading_description" rows="2" cols="50" id="loading_description">${robot_match['loading_description']}</textarea><br>
         </fieldset>
     </tal:block>
