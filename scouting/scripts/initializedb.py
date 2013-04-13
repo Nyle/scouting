@@ -17,6 +17,11 @@ from ..models import (
     RobotMatch,
     )
 
+from random import (
+    randint,
+    sample,
+    )
+
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
@@ -35,8 +40,17 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        for i in range(1, 11):
-            DBSession.add(Robot(robot_number=i))
-        for i in range(1, 11):
-            DBSession.add(Match(match_number=i, red_robots=(10,10,10),
-                                blue_robots=(10,10,10)))
+        robot_numbers = set([randint(1, 3999) for i in range(30)])
+        sample_robots = [Robot(robot_number=i) for i in robot_numbers]
+        for robot in sample_robots:
+            DBSession.add(robot)
+        sample_matches = []
+        for i in range(1, 41):
+            robots = sample(robot_numbers, 6)
+            sample_matches += [
+                Match(
+                      match_number=i,
+                      r_1=robots[0], r_2=robots[1], r_3=robots[2],
+                      b_1=robots[3], b_2=robots[4], b_3=robots[5])]
+        for match in sample_matches:
+            DBSession.add(match)
