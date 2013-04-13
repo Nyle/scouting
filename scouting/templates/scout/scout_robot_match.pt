@@ -24,53 +24,40 @@
                     <th>1 pt</th>
                     <th>2 pt</th>
                     <th>3 pt</th>
-                    <th>5 pt</th>
                     <th>Missed</th>
                 </tr>
                 <tr>
                     <th>Auto</th>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_1" value="${robot_match['auto_1']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_2" value="${robot_match['auto_2']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_3" value="${robot_match['auto_3']}" required></td>
-                    <td></td>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_missed" value="${robot_match['auto_miss']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="auto_1" value="${robot_match['auto_1']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="auto_2" value="${robot_match['auto_2']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="auto_3" value="${robot_match['auto_3']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="auto_missed" value="${robot_match['auto_miss']}"></td>
                 <tr>
                 <tr>
                     <th>Teleop</th>
-                    <td><input type="number" min="0" pattern="\d+" name="teleop_1" value="${robot_match['teleop_1']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="teleop_2" value="${robot_match['teleop_2']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="teleop_3" value="${robot_match['teleop_3']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="teleop_5" value="${robot_match['teleop_5']}" required></td>
-                    <td><input type="number" min="0" pattern="\d+" name="auto_missed" value="${robot_match['teleop_miss']}" required></td>
+                    <td><input type="number" min="0" pattern="\d+" name="teleop_1" value="${robot_match['teleop_1']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="teleop_2" value="${robot_match['teleop_2']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="teleop_3" value="${robot_match['teleop_3']}"></td>
+                    <td><input type="number" min="0" pattern="\d+" name="auto_missed" value="${robot_match['teleop_miss']}"></td>
                 <tr>
             </table>
+            <label for="teleop_5">Pyramid shots made</label><br>
+            <input type="number" min="0" pattern="\d+" name="teleop_5" value="${robot_match['teleop_5']}"><br>
+
             <label for="shooting_description">Description and Comments on the Robot's Shooting</label><br>
             <textarea name="shooting_description" rows="2" cols="50" id="shooting_description">${robot_match['shooting_description']}</textarea><br>
         </fieldset>
         <fieldset>
             <ledgend>Loading</ledgend><br>
-            <fieldset>
-                <ledgend>Human Loading</ledgend><br>
-                <input type="checkbox" tal:attributes="checked robot_match['did_human_load']" name="did_human_load" id="did_human_load">
-                <label for="did_human_load">Human Loaded</label><br>
+            <input type="checkbox" tal:attributes="checked robot_match['did_human_load']" name="did_human_load" id="did_human_load">
+            <label for="did_human_load">Human Loaded</label><br>
 
-                <label for="frisbees_successfully_human_loaded">Frisbees Successfully Human Loaded</label><br>
-                <input type="number" min="0" pattern="\d+" name="frisbees_successfully_human_loaded" value="${robot_match['frisbees_successfully_human_loaded']}" required><br>
+            <input type="checkbox" tal:attributes="checked robot_match['did_ground_load']" name="did_ground_load" id="did_ground_load">
+            <label for="did_ground_load">Ground Loaded</label><br>
 
-                <label for="frisbees_unsuccessfully_human_loaded">Frisbees Unsuccessfully Human Loaded</label><br>
-                <input type="number" min="0" pattern="\d+" name="frisbees_unsuccessfully_human_loaded" value="${robot_match['frisbees_unsuccessfully_human_loaded']}" required><br>
-            </fieldset>
-            <fieldset>
-                <ledgend>Ground Loading</ledgend><br>
-                <input type="checkbox" tal:attributes="checked robot_match['did_ground_load']" name="did_ground_load" id="did_ground_load">
-                <label for="did_ground_load">Ground Loaded</label><br>
+            <label for="auto_frisbees_ground_loaded">Frisbees Ground Loaded During Auto</label><br>
+            <input type="number" min="0" pattern="\d+" name="auto_frisbees_ground_loaded" value="${robot_match['auto_frisbees_ground_loaded']}"><br>
 
-                <label for="auto_frisbees_ground_loaded">Frisbees Ground Loaded During Auto</label><br>
-                <input type="number" min="0" pattern="\d+" name="auto_frisbees_ground_loaded" value="${robot_match['auto_frisbees_ground_loaded']}" required><br>
-
-                <label for="teleop_frisbees_ground_loaded">Frisbees Ground Loaded During Teleop</label><br>
-                <input type="number" min="0" pattern="\d+" name="teleop_frisbees_ground_loaded" value="${robot_match['teleop_frisbees_ground_loaded']}" required><br>
-            </fieldset>
             <label for="loading_description">Description and Comments on the Robot's Loading</label><br>
             <textarea name="loading_description" rows="2" cols="50" id="loading_description">${robot_match['loading_description']}</textarea><br>
         </fieldset>

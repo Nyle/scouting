@@ -8,7 +8,6 @@
     <a href="${request.route_url('view')}">Back</a>
     <h1>Team ${robot.robot_number}'s Robot</h1>
     <div id="shooting">
-        <h2>Auto</h2>
         <table>
             <tr>
                 <th>Auto</th>
@@ -18,7 +17,34 @@
                 <th>Missed</th>
                 <th>Points</th>
             </tr>
-            <tr tal:repeat="
+            <tr tal:repeat="robot_match scouted_robot_matches">
+                <th>Match ${robot_match.match_number}</th>
+                <td>${robot_match.auto_3}</td>
+                <td>${robot_match.auto_2}</td>
+                <td>${robot_match.auto_1}</td>
+                <td>${robot_match.auto_miss}</td>
+                <td>${robot_match.auto_3 * 3 + robot_match.auto_2 * 2 + robot_match.auto_1}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Teleop</th>
+                <th>5</th>
+                <th>3</th>
+                <th>2</th>
+                <th>1</th>
+                <th>Missed</th>
+                <th>Points</th>
+            </tr>
+            <tr tal:repeat="robot_match scouted_robot_matches">
+                <th>Match ${robot_match.match_number}</th>
+                <td>${robot_match.teleop_5}</td>
+                <td>${robot_match.teleop_3}</td>
+                <td>${robot_match.teleop_2}</td>
+                <td>${robot_match.teleop_1}</td>
+                <td>${robot_match.teleop_miss}</td>
+                <td>${robot_match.teleop_3 * 3 + robot_match.teleop_2 * 2 + robot_match.teleop_1}</td>
+            </tr>
         </table>
     </div>
 </body>

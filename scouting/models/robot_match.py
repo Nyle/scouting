@@ -51,16 +51,10 @@ class RobotMatch(Base):
             match, how sturdy it looked, strategy suggestions, etc.
 
         did_human_load: Whether the robot attempted to human load in the match.
-        frisbees_successfully_human_loaded: How many frisbees the robot was able
-            to human load.
-        frisbees_unsuccessfully_human_loaded: How many frisbees the robot failed
-            to human load.
 
         did_ground_load: Whether the robot ground loaded in the match.
         auto_frisbees_ground_loaded: How many frisbees the robot ground loaded
             in auto.
-        teleop_frisbees_ground_loaded: How many frisbees the robot ground loaded
-            in teleop.
 
         loading_description: A description of the robots loading: what it was
             good at, what it wasn't good at, strategy suggestions, etc.
@@ -103,12 +97,9 @@ class RobotMatch(Base):
     climbing_description = Column(UnicodeText)
 
     did_human_load = Column(Boolean)
-    frisbees_successfully_human_loaded = Column(Integer)
-    frisbees_unsuccessfully_human_loaded = Column(Integer)
 
     did_ground_load = Column(Boolean)
     auto_frisbees_ground_loaded = Column(Integer)
-    teleop_frisbees_ground_loaded = Column(Integer)
 
     loading_description = Column(UnicodeText)
 
@@ -166,17 +157,17 @@ class RobotMatch(Base):
             'did_fall_off_pyramid':'did_fall_off_pyramid' in request.POST,
             'climbing_dscription':request.POST['climbing_description'],
             'did_human_load':'did_human_load' in request.POST,
-            'frisbees_successfully_human_loaded':\
-                request.POST['frisbees_successfully_human_loaded'],
-            'frisbees_unsuccessfully_human_loaded':\
-                request.POST['frisbees_unsuccessfully_human_loaded'],
             'did_ground_load':'did_ground_load' in request.POST,
             'auto_frisbees_ground_loaded':\
                 request.POST['auto_frisbees_ground_loaded'],
-            'teleop_frisbees_ground_loaded':\
-                request.POST['teleop_frisbees_ground_loaded'],
             'loading_description':request.POST['loading_description'],
             }
+        if ((values['did_foul'] or values['did_technical_foul']) and
+            not values['foul_description']):
+            raise ValidationError(
+                'Please enter a description of the foul(s) the robot committed'
+                self.__dict__().copy().update(values)
+                )
         if values['did_shoot']:
             try:
                 values['auto_1'] = int(values['auto_1'])
@@ -191,7 +182,7 @@ class RobotMatch(Base):
                 values['teleop_miss'] = int(values['teleop_miss'])
             except ValueError:
                 raise ValidationError(
-                    'All numbers of discs scored/missed must be numbers',
+                    'You must enter a number for all of the shooting numbers',
                     self.__dict__().copy().update(values)
                     )
         if values['did_climb']:
@@ -205,29 +196,10 @@ class RobotMatch(Base):
                     'All climbing related numbers must be numbers',
                     self.__dict__().copy().update(values)
                     )
-            if values['level_reached'] not in set(10, 20, 30):
-                raise ValidationError(
-                    'Level reached must be 10, 20, or 30',
-                    self.__dict__().copy().update(values)
-                    )
-        if values['did_human_load']:
-            try:
-                values['frisbees_successfully_human_loaded'] = int(
-                    values['frisbees_successfully_human_loaded'])
-                values['frisbees_unsuccessfully_human_loaded'] = int(
-                    values['frisbees_unsuccessfully_human_loaded'])
-            except ValueError:
-                raise ValidationError(
-                    ('All numbers of frisbees human loaded/not human loaded must'
-                     'be numbers'),
-                    self.__dict__().copy().update(values)
-                    )
         if values['did_ground_load']:
             try:
                 values['auto_frisbees_ground_loaded'] = int(
                     values['auto_frisbees_ground_loaded'])
-                values['teleop_frisbees_ground_loaded'] = int(
-                    values['teleop_frisbees_ground_loaded'])
             except ValueError:
                 raise ValidationError(
                     'All numbers of frisbees ground loaded must be numbers',
@@ -270,16 +242,9 @@ class RobotMatch(Base):
             self.did_fall_off_pyramid = values['did_fall_off_pyramid']
             self.climbing_description = values['climbing_description']
         self.did_human_load = values['did_human_load']
-        if self.did_human_load:
-            self.frisbees_successfully_human_loaded =\
-                values['frisbees_successfully_human_loaded']
-            self.frisbees_unsuccessfully_human_loaded =\
-                values['frisbees_unsuccessfully_human_loaded']
         self.did_ground_load = values['did_ground_load']
         if self.did_ground_load:
             self.auto_frisbees_ground_loaded =\
                 values['auto_frisbees_ground_loaded']
-            self.teleop_frisbees_ground_loaded =\
-                values['teleop_frisbees_ground_loaded']
         if self.did_human_load or self.did_ground_load:
             self.loading_description = values['loading_description']
