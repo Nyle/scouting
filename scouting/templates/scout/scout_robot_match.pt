@@ -75,5 +75,5 @@
             <textarea name="loading_description" rows="2" cols="50" id="loading_description">${robot_match['loading_description']}</textarea><br>
         </fieldset>
     </tal:block>
-<tal:block>
+</tal:block>
 
