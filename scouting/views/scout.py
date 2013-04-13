@@ -72,7 +72,14 @@ def scout_robot(request):
 
 @view_config(route_name='scout', renderer='../templates/scout/scout.pt')
 def scout(request):
-    return {}
+    matches = (DBSession
+               .query(Match)
+               .order_by(Match.match_number)
+               .all()
+               )
+    return {
+        'matches':matches
+        }
 
 @view_config(route_name='scout_match',
              renderer='../templates/scout/scout_match.pt')
