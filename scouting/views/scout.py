@@ -108,7 +108,7 @@ def scout_match(request):
         elif 'come_back' in request.POST:
             values['is_scouted'] = False
         match.set(values)
-        DBSession.add(robot)
+        DBSession.add(match)
         return HTTPFound(location=request.route_url('scout_match',
             match_number=match_number + 1))
     return {

@@ -148,22 +148,29 @@ class Match(Base):
             values['b_foul'] = int(values['b_foul'])
             values['b_total'] = int(values['b_total'])
         except ValueError:
+            new_values = self.__dict__.copy()
+            new_values.update(values)
             raise ValidationError(
                 'All point values must be integers',
-                self.__dict__.copy().update(values)
+                new_values
                 )
         if (values['r_disc'] + values['r_climb'] + values['r_foul'] !=
             values['r_total']):
+            new_values = self.__dict__.copy()
+            new_values.update(values)
             raise ValidationError(
-                ('The sum of all red point categories must be equal to the'
+                ('The sum of all red point categories must be equal to the '
                  'total red points'),
-                self.__dict__.copy().update(values)
+                new_values
                 )
-        if b_disc + b_climb + b_foul != b_total:
+        if (values['b_disc'] + values['b_climb'] + values['b_foul'] !=
+            values['b_total']):
+            new_values = self.__dict__.copy()
+            new_values.update(values)
             raise ValidationError(
-                ('The sum of all blue point categories must be equal to the'
+                ('The sum of all blue point categories must be equal to the '
                  'total blue points'),
-                self.__dict__.copy().update(values)
+                new_values
                 )
         return values
 
