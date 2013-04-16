@@ -39,16 +39,19 @@ class Robot(Base):
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
     is_scouted = Column(Boolean)
 
-    description = Column(UnicodeText)
-
-    wheels = Column(UnicodeText)
-    gearbox = Column(UnicodeText)
-    motors = Column(UnicodeText)
-
-    can_shoot = Column(Boolean)
-    can_climb = Column(Boolean)
-    can_human_load = Column(Boolean)
-    can_ground_load = Column(Boolean)
+    shooting_description = Column(Text)
+    climbing_description = Column(Text)
+    robot_description = Column(Text)
+#     description = Column(UnicodeText)
+#
+#     wheels = Column(UnicodeText)
+#     gearbox = Column(UnicodeText)
+#     motors = Column(UnicodeText)
+#
+#     can_shoot = Column(Boolean)
+#     can_climb = Column(Boolean)
+#     can_human_load = Column(Boolean)
+#     can_ground_load = Column(Boolean)
 
 
     def __init__(self, robot_number):
@@ -78,14 +81,17 @@ class Robot(Base):
             ValidationError: The form data in request doesn't validate.
         """
         values = {
-            'description':request.POST['description'],
-        	'wheels':request.POST['wheels'],
-        	'gearbox':request.POST['gearbox'],
-        	'motors':request.POST['motors'],
-        	'can_shoot':'can_shoot' in request.POST,
-        	'can_climb':'can_climb' in request.POST,
-        	'can_human_load':'can_human_load' in request.POST,
-        	'can_ground_load':'can_ground_load' in request.POST,
+            'shooting_description':request.POST['shooting_description'],
+            'climbing_description':request.POST['climbing_description'],
+            'robot_description':request.POST['robot_description'],
+#           'description':request.POST['description'],
+#         	'wheels':request.POST['wheels'],
+#         	'gearbox':request.POST['gearbox'],
+#         	'motors':request.POST['motors'],
+#         	'can_shoot':'can_shoot' in request.POST,
+#         	'can_climb':'can_climb' in request.POST,
+#         	'can_human_load':'can_human_load' in request.POST,
+#         	'can_ground_load':'can_ground_load' in request.POST,
         	}
         return values
 
@@ -98,11 +104,15 @@ class Robot(Base):
             values: A dictionary of values returned by Robot.validate().  These
                 values should have already been validated.
         """
-        self.description = values['description']
-        self.wheels = values['wheels']
-        self.gearbox = values['gearbox']
-        self.motors = values['motors']
-        self.can_shoot = values['can_shoot']
-        self.can_climb = values['can_climb']
-        self.can_human_load = values['can_human_load']
-        self.can_ground_load = values['can_ground_load']
+        self.shooting_description = values['shooting_description']
+        self.climbing_description = values['climbing_description']
+        self.robot_description = values['robot_description']
+        self.is_scouted = values['is_scouted']
+#         self.description = values['description']
+#         self.wheels = values['wheels']
+#         self.gearbox = values['gearbox']
+#         self.motors = values['motors']
+#         self.can_shoot = values['can_shoot']
+#         self.can_climb = values['can_climb']
+#         self.can_human_load = values['can_human_load']
+#         self.can_ground_load = values['can_ground_load']

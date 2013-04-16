@@ -1,0 +1,3 @@
+<tal:block metal:define-macro="global_header">
+    <link rel="stylesheet" href="${request.static_url('scouting:static/scouting.css')}" type="text/css" media="screen" charset="utf-8">
+</tal:block>

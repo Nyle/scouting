@@ -183,6 +183,7 @@ class Match(Base):
             values: A dictionary of values returned by Match.validate().  These
                 values should have already been validated.
         """
+        self.is_scouted = values['is_scouted']
         self.r_disc = values['r_disc']
         self.r_climb = values['r_climb']
         self.r_foul = values['r_foul']

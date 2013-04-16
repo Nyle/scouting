@@ -3,49 +3,143 @@
 <head>
     <title>Team ${robot.robot_number}'s Robot</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <tal:block metal:use-macro="load: ../macros.pt">
+    </tal:block>
 </head>
 <body>
     <a href="${request.route_url('view')}">Back</a>
     <h1>Team ${robot.robot_number}'s Robot</h1>
     <div id="shooting">
+        <h2>Shooting</h2>
         <table>
             <tr>
-                <th>Auto</th>
-                <th>3</th>
-                <th>2</th>
-                <th>1</th>
+                <th></th>
+                <th colspan="5">Auto</th>
+                <th colspan="6">Teleop</th>
+            </tr>
+            <tr>
+                <th>Match</th>
                 <th>Missed</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
                 <th>Points</th>
-            </tr>
-            <tr tal:repeat="robot_match scouted_robot_matches">
-                <th>Match ${robot_match.match_number}</th>
-                <td>${robot_match.auto_3}</td>
-                <td>${robot_match.auto_2}</td>
-                <td>${robot_match.auto_1}</td>
-                <td>${robot_match.auto_miss}</td>
-                <td>${robot_match.auto_3 * 3 + robot_match.auto_2 * 2 + robot_match.auto_1}</td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <th>Teleop</th>
+                <th>Missed</th>
                 <th>5</th>
-                <th>3</th>
-                <th>2</th>
                 <th>1</th>
-                <th>Missed</th>
+                <th>2</th>
+                <th>3</th>
                 <th>Points</th>
             </tr>
             <tr tal:repeat="robot_match scouted_robot_matches">
-                <th>Match ${robot_match.match_number}</th>
-                <td>${robot_match.teleop_5}</td>
-                <td>${robot_match.teleop_3}</td>
-                <td>${robot_match.teleop_2}</td>
-                <td>${robot_match.teleop_1}</td>
+                <th>${robot_match.match_number}</th>
+                <td>${robot_match.auto_miss}</td>
+                <td>${robot_match.auto_1}</td>
+                <td>${robot_match.auto_2}</td>
+                <td>${robot_match.auto_3}</td>
+                <td>${robot_match.auto_3 * 6 + robot_match.auto_2 * 4 + robot_match.auto_1 * 2}</td>
                 <td>${robot_match.teleop_miss}</td>
+                <td>${robot_match.teleop_5}</td>
+                <td>${robot_match.teleop_1}</td>
+                <td>${robot_match.teleop_2}</td>
+                <td>${robot_match.teleop_3}</td>
                 <td>${robot_match.teleop_3 * 3 + robot_match.teleop_2 * 2 + robot_match.teleop_1}</td>
             </tr>
+            <tr tal:repeat="robot_match unscouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
         </table>
+        <h3>Comments</h3>
+        <div id="shooting_comments">
+            <tal:block tal:repeat="robot_match scouted_robot_matches">
+                <tal:block tal:condition="robot_match.shooting_description">
+                    <h4>Match ${robot_match.match_number}</h4>
+                    <p>${robot_match.shooting_description}</p>
+                </tal:block>
+            </tal:block>
+        </div>
+    </div>
+    <div id="climbing">
+        <h2>Climbing</h2>
+        <table>
+            <tr>
+                <th>Match</th>
+                <th>Level Reached</th>
+                <th>Time Climbing</th>
+                <th>Frisbees Dumped</th>
+                <th>Points</th>
+                <th>Climb Start</th>
+                <th>Climb End</th>
+            </tr>
+            <tr tal:repeat="robot_match scouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <th>${robot_match.level_reached}</th>
+                <th>${robot_match.climb_start - robot_match.climb_finish}</th>
+                <th>${robot_match.frisbees_dumped}</th>
+                <th>${robot_match.level_reached + 5 * robot_match.frisbees_dumped}</th>
+                <th>${robot_match.climb_start}</th>
+                <th>${robot_match.climb_finish}</th>
+            </tr>
+            <tr tal:repeat="robot_match unscouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </table>
+        <h3>Comments</h3>
+        <div id="climbing_comments">
+            <tal:block tal:repeat="robot_match scouted_robot_matches">
+                <tal:block tal:condition="robot_match.climbing_description">
+                    <h4>Match ${robot_match.match_number}</h4>
+                    <p>${robot_match.climbing_description}</p>
+                </tal:block>
+            </tal:block>
+        </div>
+    </div>
+    <div id="loading">
+        <h2>Loading</h2>
+        <table>
+            <tr>
+                <th>Match</th>
+                <th>Human Loaded</th>
+                <th>Ground Loaded</th>
+            </tr>
+            <tr tal:repeat="robot_match scouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <td>${'Y' if robot_match.did_human_load else 'N'}</td>
+                <td>${'Y' if robot_match.did_ground_load else 'N'}</td>
+            </tr>
+            <tr tal:repeat="robot_match unscouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <h3>Comments</h3>
+        <div id="loading_comments">
+            <tal:block tal:repeat="robot_match scouted_robot_matches">
+                <tal:block tal:condition="robot_match.climbing_description">
+                    <h4>Match ${robot_match.match_number}</h4>
+                    <p>${robot_match.loading_description}</p>
+                </tal:block>
+            </tal:block>
+        </div>
     </div>
 </body>
 </html>
