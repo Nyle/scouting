@@ -48,15 +48,3 @@ def view_robot(request):
         'scouted_robot_matches':scouted_robot_matches,
         'unscouted_robot_matches':unscouted_robot_matches,
         }
-
-@view_config(route_name='view_match',
-             renderer='../templates/view/view_match.pt')
-def view_match(request):
-    match_number = int(request.matchdict['match_number'])
-    robot_matches = DBSession.query(RobotMatch).filter(
-        Match.match_number==match_number).all()
-    if robot_matches is None:
-        return HTTPFound(location=request.route_url('view'))
-    return {
-        'robot_matches':robot_matches,
-        }

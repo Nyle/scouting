@@ -1,13 +1,24 @@
 * {
     font-family: Arial, Helvetica, sans-serif;
     color: #58595B;
-    background-color: #F5F5F5;
     }
 
+div, html {
+    background-color: #F9F9F9;
+    }
 a {
     text-decoration: none;
     font-weight: bold;
     color: #00AEEF;
+    }
+
+form {
+    padding-right: 100px;
+    padding-left: 100px;
+    }
+
+table {
+    width: 100%;
     }
 
 table td, table th {
@@ -31,9 +42,9 @@ body {
     }
 
 #robots {
-    width: 190px;
+    width: 180px;
     float: right;
-    padding: 5px;
+    padding: 10px;
     text-align: center;
     }
 
@@ -41,14 +52,17 @@ body {
     width: 100%;
     }
 
-#robots table th, #robots table td {
-    height: 50px;
-    font-size: 30px;
-    line-height: 50px;
+#robots th, #robots td {
+    height: 40px;
+    font-size: 24px;
+    line-height: 40px;
     }
 
+table a {
+    display: block;
+    }
 
-table a, table th, table td {
+table a, th, td {
     background-color: #58595B;
     color: white;
     text-align: center;
@@ -61,4 +75,12 @@ table a, table th, table td {
     }
 .blue, .blue a {
     background-color: #2B3990;
+    }
+.white {
+    background-color: white;
+    }
+
+form a, form th, form td {
+    background-color: white;
+    color: #58595B;
     }

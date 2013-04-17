@@ -39,9 +39,8 @@ class Robot(Base):
 #     scout = Column(Text, ForeignKey('users.name'), default=None)
     is_scouted = Column(Boolean)
 
-    shooting_description = Column(Text)
-    climbing_description = Column(Text)
-    robot_description = Column(Text)
+    description = Column(UnicodeText)
+
 #     description = Column(UnicodeText)
 #
 #     wheels = Column(UnicodeText)
@@ -81,9 +80,7 @@ class Robot(Base):
             ValidationError: The form data in request doesn't validate.
         """
         values = {
-            'shooting_description':request.POST['shooting_description'],
-            'climbing_description':request.POST['climbing_description'],
-            'robot_description':request.POST['robot_description'],
+            'description':request.POST['description'],
 #           'description':request.POST['description'],
 #         	'wheels':request.POST['wheels'],
 #         	'gearbox':request.POST['gearbox'],
@@ -104,9 +101,7 @@ class Robot(Base):
             values: A dictionary of values returned by Robot.validate().  These
                 values should have already been validated.
         """
-        self.shooting_description = values['shooting_description']
-        self.climbing_description = values['climbing_description']
-        self.robot_description = values['robot_description']
+        self.description = values['description']
         self.is_scouted = values['is_scouted']
 #         self.description = values['description']
 #         self.wheels = values['wheels']

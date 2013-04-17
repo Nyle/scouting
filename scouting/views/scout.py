@@ -13,6 +13,15 @@ from ..models import (
     RobotMatch
     )
 
+position_to_text = {
+    'r_1':'Red Alliance 1',
+    'r_2':'Red Alliance 2',
+    'r_3':'Red Alliance 3',
+    'b_1':'Blue Alliance 1',
+    'b_2':'Blue Alliance 2',
+    'b_3':'Blue Alliance 3',
+    }
+
 @view_config(route_name='scout', renderer='../templates/scout.pt')
 def scout(request):
     unscouted_robots = (DBSession
@@ -58,10 +67,10 @@ def scout_robot(request):
                 'message':e.message,
                 'robot':e.values,
                 }
-        if 'done' in request.POST:
-            values['is_scouted'] = True
-        elif 'come_back' in request.POST:
+        if 'unfinished' in request.POST:
             values['is_scouted'] = False
+        else:
+            values['is_scouted'] = True
         robot.set(values)
         DBSession.add(robot)
         unscouted_robots = (DBSession.query(Robot).filter(Robot.is_scouted ==
@@ -75,6 +84,8 @@ def scout_robot(request):
             return HTTPFound(location=request.route_url('scout_robot',
                 robot_number=unscouted_robots.first().robot_number))
         return HTTPFound(location=request.route_url('scout'))
+    if robot.is_scouted:
+        message = 'Note: This robot has allready been scouted'
     return {
         'page_title':'Robot ' + str(robot_number),
         'submit_location':request.route_url('scout_robot',
@@ -83,41 +94,41 @@ def scout_robot(request):
         'robot':robot.__dict__
         }
 
-@view_config(route_name='scout_match',
-             renderer='../templates/scout/scout_match.pt')
-def scout_match(request):
-    message = ''
-    match_number = int(request.matchdict['match_number'])
-    match = DBSession.query(Match).filter(
-        Match.match_number == match_number).first()
-    if match is None:
-        return HTTPFound(location=request.route_url('scout'))
-    if request.method == 'POST':
-        try:
-            values = match.validate(request)
-        except ValidationError as e:
-            return {
-                'page_title':'Match ' + str(match_number),
-                'submit_location':request.route_url('scout_match',
-                                                    match_number=match_number),
-                'message':e.message,
-                'match':e.values,
-                }
-        if 'done' in request.POST:
-            values['is_scouted'] = True
-        elif 'come_back' in request.POST:
-            values['is_scouted'] = False
-        match.set(values)
-        DBSession.add(match)
-        return HTTPFound(location=request.route_url('scout_match',
-            match_number=match_number + 1))
-    return {
-        'page_title':'Match ' + str(match_number),
-        'submit_location':request.route_url('scout_match',
-                                            match_number=match_number),
-        'message':message,
-        'match':match.__dict__,
-        }
+# @view_config(route_name='scout_match',
+#              renderer='../templates/scout/scout_match.pt')
+# def scout_match(request):
+#     message = ''
+#     match_number = int(request.matchdict['match_number'])
+#     match = DBSession.query(Match).filter(
+#         Match.match_number == match_number).first()
+#     if match is None:
+#         return HTTPFound(location=request.route_url('scout'))
+#     if request.method == 'POST':
+#         try:
+#             values = match.validate(request)
+#         except ValidationError as e:
+#             return {
+#                 'page_title':'Match ' + str(match_number),
+#                 'submit_location':request.route_url('scout_match',
+#                                                     match_number=match_number),
+#                 'message':e.message,
+#                 'match':e.values,
+#                 }
+#         if 'unfinished' in request.POST:
+#             values['is_scouted'] = False
+#         else:
+#             values['is_scouted'] = True
+#         match.set(values)
+#         DBSession.add(match)
+#         return HTTPFound(location=request.route_url('scout_match',
+#             match_number=match_number + 1))
+#     return {
+#         'page_title':'Match ' + str(match_number),
+#         'submit_location':request.route_url('scout_match',
+#                                             match_number=match_number),
+#         'message':message,
+#         'match':match.__dict__,
+#         }
 
 @view_config(route_name='scout_robot_match',
              renderer='../templates/scout/scout_robot_match.pt')
@@ -142,10 +153,10 @@ def scout_robot_match(request):
                 'message':e.message,
                 'robot_match':e.values,
                 }
-        if 'done' in request.POST:
-            values['is_scouted'] = True
-        elif 'come_back' in request.POST:
+        if 'unfinished' in request.POST:
             values['is_scouted'] = False
+        else:
+            values['is_scouted'] = True
         robot_match.set(values)
         DBSession.add(robot_match)
         return HTTPFound(location=request.route_url(
@@ -153,12 +164,15 @@ def scout_robot_match(request):
             match_number=robot_match.match_number + 1,
             robot_number=getattr(
                 DBSession.query(Match).filter(Match.match_number==
-                    robot_match.match_number).first(),
+                    robot_match.match_number + 1).first(),
                 robot_match.position
                 )))
+    if robot_match.is_scouted:
+        message = 'Note: This robot match has allready been scouted'
     return {
         'page_title':('Robot ' + str(robot_number) +
-                      ', Match ' + str(match_number)),
+                      ', Match ' + str(match_number) +
+                      ', ' + position_to_text[robot_match.position]),
         'submit_location':request.route_url('scout_robot_match',
                                             robot_number=robot_number,
                                             match_number=match_number),

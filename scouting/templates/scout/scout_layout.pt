@@ -7,12 +7,15 @@
     </tal:block>
 </head>
 <body>
+    <br>
     <a href="${request.route_url('scout')}">Back</a>
     <h1>${page_title}</h1>
-    ${message}
+    <span style="color:red">${message}</span>
     <form action="${submit_location}" method="post">
-        <input type="submit" name="done" value="Done">
-        <input type="submit" name="come_back" value="Come Back Later"><br>
+        <input type="submit" name="submit" value="Submit" style="float:right"><br>
+        <input type="checkbox" name="unfinished" id="unfinished">
+        <label for="unfinished">Form Unfinished</label><br>
+        <br>
         <tal:block metal:define-slot="form">
         </tal:block>
     </form>

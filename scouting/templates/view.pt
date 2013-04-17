@@ -7,6 +7,7 @@
     </tal:block>
 </head>
 <body>
+    <br>
     <a href="${request.route_url('scout')}">Scout</a>
     <h1>View</h1>
     <div id="matches">
@@ -19,9 +20,7 @@
             </tr>
             <tr tal:repeat="match matches">
                 <td>
-                    <a href="${request.route_url('view_match', match_number=match.match_number)}">
-                        ${match.match_number}
-                    </a>
+                    ${match.match_number}
                 </td>
                 <td class="red">
                     <a href="${request.route_url('view_robot', robot_number=match.r_1)}">

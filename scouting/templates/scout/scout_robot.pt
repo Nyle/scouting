@@ -1,13 +1,7 @@
 <tal:block metal:use-macro="load: scout_layout.pt">
     <tal:block metal:fill-slot="form">
-        <label for="shooting_description">Shooting Description:</label><br>
-        <textarea name="shooting_description" rows="2" cols="50" id="shooting_description">${robot['shooting_description']}</textarea><br>
-
-        <label for="climbing_description">Climbing Description:</label><br>
-        <textarea name="climbing_description" rows="2" cols="50" id="climbing_description">${robot['climbing_description']}</textarea><br>
-
-        <label for="robot_description">Robot Description:</label><br>
-        <textarea name="robot_description" rows="2" cols="50" id="robot_description">${robot['robot_description']}</textarea><br>
+        <label for="description">Description:</label><br>
+        <textarea name="description" rows="10" cols="50" id="description">${robot['description']}</textarea><br>
     </tal:block>
 </tal:block>
 

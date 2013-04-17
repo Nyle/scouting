@@ -6,7 +6,8 @@
     <tal:block metal:use-macro="load: macros.pt">
     </tal:block>
 </head>
-<body>
+<body id="scout">
+    <br>
     <a href="${request.route_url('view')}">View</a>
     <h1>Scout</h1>
     <div id="matches">
@@ -19,9 +20,7 @@
             </tr>
             <tr tal:repeat="match matches">
                 <td>
-                    <a href="${request.route_url('scout_match', match_number=match.match_number)}">
-                        ${match.match_number}
-                    </a>
+                    ${match.match_number}
                 </td>
                 <td class="red">
                     <a href="${request.route_url('scout_robot_match', match_number=match.match_number, robot_number=match.r_1)}">
@@ -58,10 +57,8 @@
     </div>
     <div id="robots">
         <h2>Robots</h2>
+        <h3>Unscouted</h3>
         <table>
-            <tr>
-                <th>Unscouted</th>
-            </tr>
             <tr tal:repeat="robot unscouted_robots">
                 <td>
                     <a href="${request.route_url('scout_robot', robot_number=robot.robot_number)}">
@@ -70,10 +67,8 @@
                 </td>
             </tr>
         </table>
+        <h3>Scouted</h3>
         <table>
-            <tr>
-                <th>Scouted</th>
-            </tr>
             <tr tal:repeat="robot scouted_robots" >
                 <td>
                     <a href="${request.route_url('scout_robot', robot_number=robot.robot_number)}">

@@ -7,23 +7,36 @@
     </tal:block>
 </head>
 <body>
+    <br>
     <a href="${request.route_url('view')}">Back</a>
     <h1>Team ${robot.robot_number}'s Robot</h1>
+    <div id="description">
+        <h2>Description</h2>
+        <p>${robot.description}</p>
+    </div>
     <div id="shooting">
         <h2>Shooting</h2>
         <table>
             <tr>
                 <th></th>
+                <th class="white"></th>
                 <th colspan="5">Auto</th>
+                <th class="white"></th>
                 <th colspan="6">Teleop</th>
             </tr>
             <tr>
                 <th>Match</th>
+
+                <th class="white"></th>
+
                 <th>Missed</th>
                 <th>1</th>
                 <th>2</th>
                 <th>3</th>
                 <th>Points</th>
+
+                <th class="white"></th>
+
                 <th>Missed</th>
                 <th>5</th>
                 <th>1</th>
@@ -33,11 +46,17 @@
             </tr>
             <tr tal:repeat="robot_match scouted_robot_matches">
                 <th>${robot_match.match_number}</th>
+
+                <th class="white"></th>
+
                 <td>${robot_match.auto_miss}</td>
                 <td>${robot_match.auto_1}</td>
                 <td>${robot_match.auto_2}</td>
                 <td>${robot_match.auto_3}</td>
                 <td>${robot_match.auto_3 * 6 + robot_match.auto_2 * 4 + robot_match.auto_1 * 2}</td>
+
+                <td class="white"></td>
+
                 <td>${robot_match.teleop_miss}</td>
                 <td>${robot_match.teleop_5}</td>
                 <td>${robot_match.teleop_1}</td>
@@ -47,12 +66,18 @@
             </tr>
             <tr tal:repeat="robot_match unscouted_robot_matches">
                 <th>${robot_match.match_number}</th>
+
+                <th class="white"></th>
+
                 <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
+
+                <th class="white"></th>
+
+
                 <th></th>
                 <th></th>
                 <th></th>
