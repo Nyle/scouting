@@ -40,17 +40,120 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        robot_numbers = set([randint(1, 3999) for i in range(30)])
-        sample_robots = [Robot(robot_number=i) for i in robot_numbers]
-        for robot in sample_robots:
-            DBSession.add(robot)
-        sample_matches = []
-        for i in range(1, 41):
+#         robot_numbers = [int(i) for i in teams.strip().split('\n')]
+#         robots = [Robot(robot_number=i) for i in robot_numbers]
+#         for robot in robots:
+#             DBSession.add(robot)
+        robot_numbers = set([randint(1, 5000) for i in range(100)])
+        for robot_number in robot_numbers:
+            DBSession.add(Robot(robot_number=robot_number))
+        for match_number in range(140):
             robots = sample(robot_numbers, 6)
-            sample_matches += [
-                Match(
-                      match_number=i,
-                      r_1=robots[0], r_2=robots[1], r_3=robots[2],
-                      b_1=robots[3], b_2=robots[4], b_3=robots[5])]
-        for match in sample_matches:
-            DBSession.add(match)
+            DBSession.add(Match(match_number=match_number,
+                                r_1=robots[0], r_2=robots[1], r_3=robots[2],
+                                b_1=robots[3], b_2=robots[4], b_3=robots[5],
+                                ))
+
+
+
+teams = """
+27
+45
+70
+95
+111
+118
+125
+151
+192
+222
+245
+295
+329
+337
+358
+384
+422
+447
+467
+578
+610
+744
+842
+1086
+1114
+1218
+1241
+1323
+1325
+1378
+1405
+1425
+1429
+1477
+1629
+1675
+1710
+1726
+1732
+1772
+1801
+1806
+1912
+1987
+2000
+2046
+2169
+2175
+2199
+2259
+2337
+2338
+2341
+2403
+2474
+2481
+2485
+2502
+2512
+2630
+2648
+2729
+2809
+2834
+2907
+2978
+3018
+3132
+3189
+3211
+3284
+3459
+3481
+3528
+3641
+3656
+3941
+3944
+4011
+4026
+4039
+4069
+4158
+4334
+4452
+4462
+4472
+4481
+4492
+4502
+4522
+4541
+4557
+4579
+4601
+4607
+4627
+4641
+4797
+"""

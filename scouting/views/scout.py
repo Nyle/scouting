@@ -85,7 +85,7 @@ def scout_robot(request):
                 robot_number=unscouted_robots.first().robot_number))
         return HTTPFound(location=request.route_url('scout'))
     if robot.is_scouted:
-        message = 'Note: This robot has allready been scouted'
+        message = 'Note: This robot has already been scouted'
     return {
         'page_title':'Robot ' + str(robot_number),
         'submit_location':request.route_url('scout_robot',
@@ -168,7 +168,7 @@ def scout_robot_match(request):
                 robot_match.position
                 )))
     if robot_match.is_scouted:
-        message = 'Note: This robot match has allready been scouted'
+        message = 'Note: This robot match has already been scouted'
     return {
         'page_title':('Robot ' + str(robot_number) +
                       ', Match ' + str(match_number) +

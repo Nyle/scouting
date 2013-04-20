@@ -6,7 +6,11 @@ from sqlalchemy import (
     UnicodeText,
     Boolean,
     )
-from .base import Base
+from .base import (
+    Base,
+    DBSession,
+    ValidationError,
+    )
 
 class RobotMatch(Base):
     """The data gathered for a specific robot in a specific match.
@@ -185,7 +189,15 @@ class RobotMatch(Base):
             try:
                 values['climb_start'] = int(values['climb_start'])
                 values['climb_finish'] = int(values['climb_finish'])
-                values['level_reached'] = int(values['level_reached'])
+                try:
+                    values['level_reached'] = int(values['level_reached'])
+                except TypeError:
+                    new_values = self.__dict__.copy()
+                    new_values.update(values)
+                    raise ValidationError(
+                        'You must select a level the robot climbed too',
+                        new_values
+                        )
                 values['frisbees_dumped'] = int(values['frisbees_dumped'])
             except ValueError:
                 new_values = self.__dict__.copy()

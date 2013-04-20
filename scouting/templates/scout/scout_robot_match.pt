@@ -63,7 +63,7 @@
             <input type="number" min="0" pattern="\d+" name="climb_finish" value="${robot_match['climb_finish']}"><br>
             <br>
             <label for="level_reached">Level Reached:</label><br>
-            <input type="radio" name="level_reached" value="0" tal:attributes="checked robot_match['level_reached'] == 0" id="0"><label for="0">0</label>
+            <input type="radio" name="level_reached" value="0" tal:attributes="checked robot_match['level_reached'] == 0" id="0" checked><label for="0">0</label>
             <input type="radio" name="level_reached" value="10" tal:attributes="checked robot_match['level_reached'] == 10" id="10"><label for="10">10</label>
             <input type="radio" name="level_reached" value="20" tal:attributes="checked robot_match['level_reached'] == 20" id="20"><label for="20">20</label>
             <input type="radio" name="level_reached" value="30" tal:attributes="checked robot_match['level_reached'] == 30" id="30"><label for="30">30</label><br>
@@ -78,10 +78,10 @@
             <ledgend>Loading</ledgend><br>
             <br>
             <input type="checkbox" tal:attributes="checked robot_match['did_human_load']" name="did_human_load" id="did_human_load">
-            <label for="did_human_load">Human Loaded:</label><br>
+            <label for="did_human_load">Human Loaded</label><br>
 
             <input type="checkbox" tal:attributes="checked robot_match['did_ground_load']" name="did_ground_load" id="did_ground_load">
-            <label for="did_ground_load">Ground Loaded:</label><br>
+            <label for="did_ground_load">Ground Loaded</label><br>
             <br>
             <label for="auto_frisbees_ground_loaded">Frisbees Ground Loaded During Auto:</label><br>
             <input type="number" min="0" pattern="\d+" name="auto_frisbees_ground_loaded" value="${robot_match['auto_frisbees_ground_loaded']}"><br>

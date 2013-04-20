@@ -14,6 +14,14 @@
         <h2>Description</h2>
         <p>${robot.description}</p>
     </div>
+    <div id="comments">
+        <tal:block tal:repeat="robot_match scouted_robot_matches">
+            <tal:block tal:condition="robot_match.robot_match_comments">
+                <h4>Match ${robot_match.match_number}</h4>
+                <p>${robot_match.robot_match_comments}</p>
+            </tal:block>
+        </tal:block>
+    </div>
     <div id="shooting">
         <h2>Shooting</h2>
         <table>
@@ -133,6 +141,35 @@
                 <tal:block tal:condition="robot_match.climbing_description">
                     <h4>Match ${robot_match.match_number}</h4>
                     <p>${robot_match.climbing_description}</p>
+                </tal:block>
+            </tal:block>
+        </div>
+    </div>
+    <div id="fouling">
+        <h2>Fouling</h2>
+        <table>
+            <tr>
+                <th>Match</th>
+                <th>Fouled</th>
+                <th>Technical Fouled</th>
+            </tr>
+            <tr tal:repeat="robot_match scouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <td>${'Y' if robot_match.did_foul else 'N'}</td>
+                <td>${'Y' if robot_match.did_technical_foul else 'N'}</td>
+            </tr>
+            <tr tal:repeat="robot_match unscouted_robot_matches">
+                <th>${robot_match.match_number}</th>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <h3>Comments</h3>
+        <div id="foul_comments">
+            <tal:block tal:repeat="robot_match scouted_robot_matches">
+                <tal:block tal:condition="robot_match.foul_description">
+                    <h4>Match ${robot_match.match_number}</h4>
+                    <p>${robot_match.foul_description}</p>
                 </tal:block>
             </tal:block>
         </div>

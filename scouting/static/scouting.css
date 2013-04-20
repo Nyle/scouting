@@ -4,7 +4,7 @@
     }
 
 div, html {
-    background-color: #F9F9F9;
+    background-color: #F0F0F0;
     }
 a {
     text-decoration: none;
@@ -77,10 +77,10 @@ table a, th, td {
     background-color: #2B3990;
     }
 .white {
-    background-color: white;
+    background-color: #F0F0F0;
     }
 
 form a, form th, form td {
-    background-color: white;
+    background-color: #F0F0F0;
     color: #58595B;
     }
